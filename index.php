@@ -35,7 +35,10 @@
             <br>
             <br>
             <br>
+            <H2>TicoWorks: Sistema de Asistencia Laboral</H2>
+            <br>
             <H2>Te damos la bienvenida!</H2>
+            <br>
             <H5>Crea una cuenta y/o Inicia Sesion y registra tu asistencia.</H5>
             
 </form>
