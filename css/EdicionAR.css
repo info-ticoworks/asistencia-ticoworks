@@ -1,0 +1,107 @@
+body, html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(#024959,#33ffff);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    /* No Scrollbar */
+    overflow: hidden;
+}
+
+.form-box .Ub{
+    visibility: hidden;
+}
+p{
+    font: 15px Arial, Helvetica, sans-serif;
+    color: #fff;
+}
+
+.form-box {
+    width: 400px;
+    padding: 28px;
+    background: #191919;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.form-box .label{
+    color: #ffffff;  
+}
+
+.form-title {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.form-box label {
+    color: #fff;
+}
+.form-box select {
+    border: 0;
+    background-color: #191919;
+    color: #ffffff;
+    display: block;
+    margin: 18px auto;
+    text-align: center;
+    border: 2px solid #345fee;
+    padding: 14px 20px;
+    width: 220px;
+    outline: none;
+    border-radius: 20px;
+    transition: 0.23s;
+}
+
+.form-box label{
+    color: #ffffff;
+}
+
+.form-box input[type="text"], .form-box input[type="password"], .form-box input[type="submit"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 18px auto;
+    text-align: center;
+    border: 2px solid #345fee;
+    padding: 14px 20px;
+    width: 220px;
+    outline: none;
+    color: white;
+    border-radius: 20px;
+    transition: 0.23s;
+
+}
+
+.form-box input[type="text"]:focus, .form-box input[type="password"]:focus {
+    width: 300px;
+    border-color: #ffffff;
+}
+
+.form-box button[type="submit"] {
+    border: 0;
+    background: #345fee;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #1922bd;
+    padding: 16px 20px;
+    outline: none;
+    color: white;
+    border-radius: 25px;
+    transition: 0.23s;
+    cursor: pointer;
+}
+
+.form-box button[type="submit"]:hover {
+    background: none;
+}
+
+  
