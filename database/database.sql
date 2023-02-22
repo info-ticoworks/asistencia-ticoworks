@@ -1,23 +1,43 @@
-DROP DATABASE IF EXISTS Colaboradores;
-CREATE DATABASE Colaboradores;
-USE Colaboradores;
+DROP DATABASE IF EXISTS AsistenciaTW;
+CREATE DATABASE AsistenciaTW;
+USE AsistenciaTW;
 
-CREATE TABLE Perfiles(
-Cedula varchar (50)not null,
-Nombre varchar (100) not null,
-Contraseña varchar (20) not null,
-Primary key (Cedula)
+CREATE TABLE tipoUsuario (
+idTipoUsuario int not null,
+nombretipoUsuario varchar (30) not null,
+Primary key (idTipoUsuario)
 );
 
-CREATE TABLE Fechaperfil(
-ID int UNSIGNED NOT NULL AUTO_INCREMENT,
-HoraIngreso time(6),
-HoraSalida time(6),
-HoraSalidaAlmuerzo time (6),
-HoraEntradaAlmuerzo time (6),
-Cedula varchar (50),
-Fecha date,
-Ubicacion varchar (50),
-PRIMARY KEY (ID),
-FOREIGN KEY (Cedula) REFERENCES Perfiles (Cedula)
-); 
+CREATE TABLE usuarios (
+cedula int not null,
+nombre varchar (50) not null,
+apellido1 varchar (50) not null,
+apellido2 varchar (50) not null,
+pass varchar (30) not null,
+telefono int not null,
+correo varchar (30) not null,
+idTipoUsuario int not null,
+PRIMARY KEY (cedula),
+FOREIGN KEY (idTipoUsuario) REFERENCES tipoUsuario (idTipoUsuario)
+);
+
+CREATE TABLE marcas (
+id int UNSIGNED NOT NULL AUTO_INCREMENT,
+horaIngreso time(6),
+horaSalida time(6),
+horaSalidaAlmuerzo time (6),
+horaEntradaAlmuerzo time (6),
+cedula int not null,
+fecha date,
+ubicacion varchar (50),
+PRIMARY KEY (id),
+FOREIGN KEY (cedula) REFERENCES usuario (cedula)
+);
+
+CREATE TABLE notificaciones (
+cedula int not null,
+telefono int not null,
+correo varchar (30) not null,
+PRIMARY KEY (cedula),
+FOREIGN KEY (cedula) REFERENCES usuario (cedula)
+);

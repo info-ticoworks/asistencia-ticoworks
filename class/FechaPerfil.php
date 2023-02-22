@@ -1,5 +1,4 @@
 <?php
-echo '<script>console.log("Carga de FechaPerfil - Paso 1")</script>';
 class FechaPerfil {
     private $user;
     private $date;
@@ -77,9 +76,10 @@ class FechaPerfil {
 
             
 function insertarFechaPerfil() {
-        $conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");; 
+    require_once('config.php');
+    //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");; 
 
-        if ($conexion->connect_errno) {
+    if ($conexion->connect_errno) {
             echo "<script>
                 Swal.fire({
                 icon: 'error',
@@ -90,7 +90,7 @@ function insertarFechaPerfil() {
             exit();
         }
 
-        $instruccionSQL = 'INSERT INTO Fechaperfil(Cedula, Fecha, Ubicacion) VALUES(?, ?, ?);';
+        $instruccionSQL = 'INSERT INTO marcas(cedula, fecha, ubicacion) VALUES(?, ?, ?);';
         $comando = $conexion->prepare($instruccionSQL);
 
         if ($comando) {
@@ -119,9 +119,10 @@ function insertarFechaPerfil() {
 }    
 
 function insertarHoraIngreso() {
-        $conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
+    require_once('config.php');
+        //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
 
-        if ($conexion->connect_errno) {
+    if ($conexion->connect_errno) {
             echo "<script>
                 Swal.fire({
                 icon: 'error',
@@ -130,12 +131,12 @@ function insertarHoraIngreso() {
                 })
                 </script>";
             exit();
-        }
+    }
 
-        $instruccionSQL = 'UPDATE Fechaperfil SET HoraIngreso = ? WHERE Fecha = ? AND Cedula = ?';
+        $instruccionSQL = 'UPDATE marcas SET horaIngreso = ? WHERE fecha = ? AND cedula = ?';
         $comando = $conexion->prepare($instruccionSQL);
 
-        if ($comando) {
+    if ($comando) {
             $comando->bind_param("sss",  $this->ingreso, $this->date, $this->user);
             $comando->execute();
             if ($conexion->affected_rows > 0) {
@@ -143,6 +144,7 @@ function insertarHoraIngreso() {
             } else {
             }
             $conexion->close();
+            echo '<script>console.log("Paso 2")</script>';
         } else {
              echo "<script>
                 Swal.fire({
@@ -157,9 +159,9 @@ function insertarHoraIngreso() {
     }
     
 function insertarHoraSalida() {
-        $conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
+    //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
 
-        if ($conexion->connect_errno) {
+    if ($conexion->connect_errno) {
             echo "<script>
                 Swal.fire({
                 icon: 'error',
@@ -170,7 +172,7 @@ function insertarHoraSalida() {
             exit();
         }
 
-        $instruccionSQL = 'UPDATE Fechaperfil SET HoraSalida = ? WHERE Fecha = ? AND Cedula = ?';
+        $instruccionSQL = 'UPDATE marcas SET HoraSalida = ? WHERE Fecha = ? AND Cedula = ?';
         $comando = $conexion->prepare($instruccionSQL);
 
         if ($comando) {
@@ -190,9 +192,9 @@ function insertarHoraSalida() {
     }
     
 function insertarHoraSalidaAlmuerzo() {
-        $conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
+        //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
 
-        if ($conexion->connect_errno) {
+    if ($conexion->connect_errno) {
             echo "<script>
                 Swal.fire({
                 icon: 'error',
@@ -203,7 +205,7 @@ function insertarHoraSalidaAlmuerzo() {
             exit();
         }
 
-        $instruccionSQL = 'UPDATE Fechaperfil SET HoraSalidaAlmuerzo = ? WHERE Fecha = ? AND Cedula = ?';
+        $instruccionSQL = 'UPDATE marcas SET HoraSalidaAlmuerzo = ? WHERE Fecha = ? AND Cedula = ?';
         $comando = $conexion->prepare($instruccionSQL);
 
         if ($comando) {
@@ -229,7 +231,7 @@ function insertarHoraSalidaAlmuerzo() {
     }
     
     function insertarHoraEntradaAlmuerzo() {
-        $conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
+        //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
 
         if ($conexion->connect_errno) {
             echo "<script>
@@ -242,7 +244,7 @@ function insertarHoraSalidaAlmuerzo() {
             exit();
         }
 
-        $instruccionSQL = 'UPDATE Fechaperfil SET HoraEntradaAlmuerzo = ? WHERE Fecha = ? AND Cedula = ?';
+        $instruccionSQL = 'UPDATE marcas SET HoraEntradaAlmuerzo = ? WHERE Fecha = ? AND Cedula = ?';
         $comando = $conexion->prepare($instruccionSQL);
 
         if ($comando) {
@@ -265,5 +267,7 @@ function insertarHoraSalidaAlmuerzo() {
             $conexion->close();
             exit();
         }
+        
     }
+
 }

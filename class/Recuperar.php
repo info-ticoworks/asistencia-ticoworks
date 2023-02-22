@@ -1,5 +1,6 @@
 <?php
 class Recuperar {
+    require 'config.php';
     
     private $contra;
     private $user;
@@ -27,7 +28,7 @@ class Recuperar {
 
         function ActualizarContraseña() {
         
-        $conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia", 3306);
+        //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia", 3306);
         
         if ($conexion->connect_errno) {
              echo "<script>

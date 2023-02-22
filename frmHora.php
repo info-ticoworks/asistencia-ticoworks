@@ -67,12 +67,12 @@
 
     try {
         if (isset($_POST['btEnviar'])) {
-            echo '<script>console.log("Paso 2")</script>';
             require './config.php';
-            echo '<script>console.log("Paso 4")</script>';
+            echo '<script>console.log("Paso 1")</script>';
             require './class/FechaPerfil.php';
-            echo '<script>console.log("Paso 5")</script>';
+            echo '<script>console.log("Paso 3")</script>';
             require './noti_ingreso.php';
+            echo '<script>console.log("Paso 5")</script>';
             $FechaPerfil = new FechaPerfil();
             $Noti = new NotiWhats();
             $listR = $_POST["lista"];
@@ -125,7 +125,7 @@
                     mysqli_free_result($result);
 
 
-                    $q = "SELECT COUNT(*) as contar from Fechaperfil where Cedula = '$cedula' AND Fecha = '$date'";
+                    $q = "SELECT COUNT(*) as contar from marcas where Cedula = '$cedula' AND Fecha = '$date'";
                     $consulta = mysqli_query($conexion, $q);
                     $array = mysqli_fetch_array($consulta);
                         if ($array['contar'] == 0) {
@@ -137,7 +137,7 @@
                     if ($listR == "Ingreso") {
                             date_default_timezone_set('America/Costa_Rica');
                             $time = date("H:i");
-                            $cons = "SELECT COUNT(HoraIngreso) as contar from Fechaperfil where Cedula = '$cedula' AND Fecha = '$date'";
+                            $cons = "SELECT COUNT(HoraIngreso) as contar from marcas where Cedula = '$cedula' AND Fecha = '$date'";
                             $consulta = mysqli_query($conexion, $cons);
                             $array = mysqli_fetch_array($consulta);
                             if ($array['contar'] == 0) {
@@ -154,7 +154,7 @@
                             $curl = curl_init();
                             curl_setopt_array($curl, [
                                 CURLOPT_PORT => "3020",
-                                CURLOPT_URL => "http://51.222.14.197:3020/lead",
+                                CURLOPT_URL => "http://ws.tico.works/lead",
                                 CURLOPT_RETURNTRANSFER => true,
                                 CURLOPT_ENCODING => "",
                                 CURLOPT_MAXREDIRS => 10,
@@ -186,7 +186,7 @@
                             $curl = curl_init();
                             curl_setopt_array($curl, [
                                 CURLOPT_PORT => "3020",
-                                CURLOPT_URL => "http://51.222.14.197:3020/lead",
+                                CURLOPT_URL => "http://ws.tico.works/lead",
                                 CURLOPT_RETURNTRANSFER => true,
                                 CURLOPT_ENCODING => "",
                                 CURLOPT_MAXREDIRS => 10,
@@ -232,7 +232,7 @@
                         if ($listR == "Salida") {
                             date_default_timezone_set('America/Costa_Rica');
                             $time = date("H:i");
-                            $cons = "SELECT COUNT(HoraSalida) as contar from Fechaperfil where Cedula = '$cedula' AND Fecha = '$date'";
+                            $cons = "SELECT COUNT(HoraSalida) as contar from marcas where Cedula = '$cedula' AND Fecha = '$date'";
                             $consulta = mysqli_query($conexion, $cons);
                             $array = mysqli_fetch_array($consulta);
                             if ($array['contar'] > 0) {
@@ -257,7 +257,7 @@
                                 $curl = curl_init();
                                 curl_setopt_array($curl, [
                                     CURLOPT_PORT => "3020",
-                                    CURLOPT_URL => "http://51.222.14.197:3020/lead",
+                                    CURLOPT_URL => "http://ws.tico.works/lead",
                                     CURLOPT_RETURNTRANSFER => true,
                                     CURLOPT_ENCODING => "",
                                     CURLOPT_MAXREDIRS => 10,
@@ -289,7 +289,7 @@
                                 $curl = curl_init();
                                 curl_setopt_array($curl, [
                                     CURLOPT_PORT => "3020",
-                                    CURLOPT_URL => "http://51.222.14.197:3020/lead",
+                                    CURLOPT_URL => "http://ws.tico.works/lead",
                                     CURLOPT_RETURNTRANSFER => true,
                                     CURLOPT_ENCODING => "",
                                     CURLOPT_MAXREDIRS => 10,
@@ -327,7 +327,7 @@
                             if ($listR == "Salida a Almuerzo") {
                                 date_default_timezone_set('America/Costa_Rica');
                                 $time = date("H:i");
-                                $cons = "SELECT COUNT(HoraSalidaAlmuerzo) as contar from Fechaperfil where Cedula = '$cedula' AND Fecha = '$date'";
+                                $cons = "SELECT COUNT(HoraSalidaAlmuerzo) as contar from marcas where Cedula = '$cedula' AND Fecha = '$date'";
                                 $consulta = mysqli_query($conexion, $cons);
                                 $array = mysqli_fetch_array($consulta);
                                 if ($array['contar'] > 0) {
@@ -352,7 +352,7 @@
                                     $curl = curl_init();
                                     curl_setopt_array($curl, [
                                         CURLOPT_PORT => "3020",
-                                        CURLOPT_URL => "http://51.222.14.197:3020/lead",
+                                        CURLOPT_URL => "http://ws.tico.works/lead",
                                         CURLOPT_RETURNTRANSFER => true,
                                         CURLOPT_ENCODING => "",
                                         CURLOPT_MAXREDIRS => 10,
@@ -384,7 +384,7 @@
                                     $curl = curl_init();
                                     curl_setopt_array($curl, [
                                         CURLOPT_PORT => "3020",
-                                        CURLOPT_URL => "http://51.222.14.197:3020/lead",
+                                        CURLOPT_URL => "http://ws.tico.works/lead",
                                         CURLOPT_RETURNTRANSFER => true,
                                         CURLOPT_ENCODING => "",
                                         CURLOPT_MAXREDIRS => 10,
@@ -423,7 +423,7 @@
                             if ($listR == "Entrada despues de Almuerzo") {
                                 date_default_timezone_set('America/Costa_Rica');
                                 $time = date("H:i");
-                                $cons = "SELECT COUNT(HoraEntradaAlmuerzo) as contar from Fechaperfil where Cedula = '$cedula' AND Fecha = '$date'";
+                                $cons = "SELECT COUNT(HoraEntradaAlmuerzo) as contar from marcas where Cedula = '$cedula' AND Fecha = '$date'";
                                 $consulta = mysqli_query($conexion, $cons);
                                 $array = mysqli_fetch_array($consulta);
                                 if ($array['contar'] > 0) {
@@ -448,7 +448,7 @@
                                     $curl = curl_init();
                                     curl_setopt_array($curl, [
                                         CURLOPT_PORT => "3020",
-                                        CURLOPT_URL => "http://51.222.14.197:3020/lead",
+                                        CURLOPT_URL => "http://ws.tico.works/lead",
                                         CURLOPT_RETURNTRANSFER => true,
                                         CURLOPT_ENCODING => "",
                                         CURLOPT_MAXREDIRS => 10,
@@ -480,7 +480,7 @@
                                     $curl = curl_init();
                                     curl_setopt_array($curl, [
                                         CURLOPT_PORT => "3020",
-                                        CURLOPT_URL => "http://51.222.14.197:3020/lead",
+                                        CURLOPT_URL => "http://ws.tico.works/lead",
                                         CURLOPT_RETURNTRANSFER => true,
                                         CURLOPT_ENCODING => "",
                                         CURLOPT_MAXREDIRS => 10,

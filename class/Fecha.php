@@ -1,8 +1,7 @@
 <?php
 
 class Fecha {
-   
-   
+
     private $Fecha;
     
     public function __construct() {
@@ -19,7 +18,7 @@ class Fecha {
     
     
     function insertarFecha() {
-        $conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
+        //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
 
         if ($conexion->connect_errno) {
              echo "<script>

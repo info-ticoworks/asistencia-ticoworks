@@ -29,12 +29,12 @@
                 require './config.php';
                 $cedula = $_POST['ced'];
                 $pass = $_POST['passc'];
-                $q = "SELECT COUNT(*) as contar from Perfiles where Cedula = '$cedula' AND Password = '$pass'";
+                $q = "SELECT COUNT(*) as contar from usurios where cedula = '$cedula' AND pass = '$pass'";
                 $consulta = mysqli_query($conexion, $q);
                 $array = mysqli_fetch_array($consulta);
                 if ($array['contar'] = 1) {
                     $_SESSION['cedula'] = $cedula;
-                    if($cedula == "3101646103"){
+                    if($cedula == "205610630"){
                     echo '<script type="text/javascript">
                     window.location = "/admin.php"
                     </script>';

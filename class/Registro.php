@@ -1,4 +1,5 @@
 <?php
+require './config.php';
 class Registro {
 
     private $usuario;
@@ -36,7 +37,7 @@ class Registro {
     }
 
     function insertarPerfil() {
-        $conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
+        //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
         if ($conexion->connect_errno) {
             exit();
              echo "<script>

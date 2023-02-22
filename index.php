@@ -23,6 +23,7 @@
                     <li><a href="frmHora.php"><span class="icon-user-check"></span>Registrar hora</a></li>
                     <li><a href="frmAcceder.php"><span class="icon-user-check"></span>Iniciar Sesión</a></li>
                     <li><a href="frmRegistro.php"><span class="icon-user-plus"></span>Registrarse</a></li>
+                    <li><a href="sysAdmin.php"><span class="icon-user-plus"></span>Administración</a></li>
                 </ul>
             </div>
             </nav>
