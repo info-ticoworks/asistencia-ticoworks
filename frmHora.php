@@ -102,7 +102,7 @@
 
             }else{
             //Inicio de consulta de usuario
-            $sql = "SELECT * FROM Perfiles where Cedula = $cedula";
+            $sql = "SELECT * FROM usuarios where cedula = $cedula";
             if($result = mysqli_query($conexion, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     //echo "<table>";
