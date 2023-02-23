@@ -75,26 +75,21 @@ class FechaPerfil {
     }
 
             
-function insertarFechaPerfil() {
-    require_once('config.php');
-    //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");; 
-
+function insertarUsuarioIngreso() {
+    include './config.php';
     if ($conexion->connect_errno) {
-            echo "<script>
-                Swal.fire({
-                icon: 'error',
-                title: 'Oops...!',
-                text: 'No fue posible conectar con el servidor..!',  
-                })
-                </script>";
+        echo "<script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...!',
+            text: 'No fue posible conectar con el servidor..!',  
+            })
+            </script>";
             exit();
         }
-
-        $instruccionSQL = 'INSERT INTO marcas(cedula, fecha, ubicacion) VALUES(?, ?, ?);';
+        $instruccionSQL = 'INSERT INTO marcas(cedula, fecha, ubicacion, idTipoMarca) VALUES(?, ?, ?, 1);';
         $comando = $conexion->prepare($instruccionSQL);
-
         if ($comando) {
-            
             $comando->bind_param("sss",  $this->user, $this->date, $this->ubicacion);
             $comando->execute();
             if ($conexion->affected_rows > 0) {
@@ -102,9 +97,111 @@ function insertarFechaPerfil() {
             } else {
             }
             $conexion->close();
-            
+        } else {
+             echo "<script>
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...!',
+                text: 'No fue posible añadir el registro en la base de datos..!',  
+                })
+                </script>";
+            $conexion->close();
+            exit();
+        }
+}
 
-            
+function insertarUsuarioSalida() {
+    include './config.php';
+    if ($conexion->connect_errno) {
+        echo "<script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...!',
+            text: 'No fue posible conectar con el servidor..!',  
+            })
+            </script>";
+            exit();
+        }
+        $instruccionSQL = 'INSERT INTO marcas(cedula, fecha, ubicacion, idTipoMarca) VALUES(?, ?, ?, 4);';
+        $comando = $conexion->prepare($instruccionSQL);
+        if ($comando) {
+            $comando->bind_param("sss",  $this->user, $this->date, $this->ubicacion);
+            $comando->execute();
+            if ($conexion->affected_rows > 0) {
+                $pk = $conexion->insert_id;
+            } else {
+            }
+            $conexion->close();
+        } else {
+             echo "<script>
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...!',
+                text: 'No fue posible añadir el registro en la base de datos..!',  
+                })
+                </script>";
+            $conexion->close();
+            exit();
+        }
+}
+
+function insertarUsuarioSalidaAlmuerzo() {
+    include './config.php';
+    if ($conexion->connect_errno) {
+        echo "<script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...!',
+            text: 'No fue posible conectar con el servidor..!',  
+            })
+            </script>";
+            exit();
+        }
+        $instruccionSQL = 'INSERT INTO marcas(cedula, fecha, ubicacion, idTipoMarca) VALUES(?, ?, ?, 2);';
+        $comando = $conexion->prepare($instruccionSQL);
+        if ($comando) {
+            $comando->bind_param("sss",  $this->user, $this->date, $this->ubicacion);
+            $comando->execute();
+            if ($conexion->affected_rows > 0) {
+                $pk = $conexion->insert_id;
+            } else {
+            }
+            $conexion->close();
+        } else {
+             echo "<script>
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...!',
+                text: 'No fue posible añadir el registro en la base de datos..!',  
+                })
+                </script>";
+            $conexion->close();
+            exit();
+        }
+}
+
+function insertarUsuarioEntradaAlmuerzo() {
+    include './config.php';
+    if ($conexion->connect_errno) {
+        echo "<script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...!',
+            text: 'No fue posible conectar con el servidor..!',  
+            })
+            </script>";
+            exit();
+        }
+        $instruccionSQL = 'INSERT INTO marcas(cedula, fecha, ubicacion, idTipoMarca) VALUES(?, ?, ?, 3);';
+        $comando = $conexion->prepare($instruccionSQL);
+        if ($comando) {
+            $comando->bind_param("sss",  $this->user, $this->date, $this->ubicacion);
+            $comando->execute();
+            if ($conexion->affected_rows > 0) {
+                $pk = $conexion->insert_id;
+            } else {
+            }
+            $conexion->close();
         } else {
              echo "<script>
                 Swal.fire({
@@ -119,9 +216,7 @@ function insertarFechaPerfil() {
 }    
 
 function insertarHoraIngreso() {
-    require_once('config.php');
-        //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
-
+    include './config.php';
     if ($conexion->connect_errno) {
             echo "<script>
                 Swal.fire({
@@ -133,7 +228,7 @@ function insertarHoraIngreso() {
             exit();
     }
 
-        $instruccionSQL = 'UPDATE marcas SET horaIngreso = ? WHERE fecha = ? AND cedula = ?';
+        $instruccionSQL = 'UPDATE marcas SET hora = ? WHERE fecha = ? AND cedula = ? AND idTipoMarca = 1;';
         $comando = $conexion->prepare($instruccionSQL);
 
     if ($comando) {
@@ -159,8 +254,7 @@ function insertarHoraIngreso() {
     }
     
 function insertarHoraSalida() {
-    //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
-
+    include './config.php';
     if ($conexion->connect_errno) {
             echo "<script>
                 Swal.fire({
@@ -172,7 +266,7 @@ function insertarHoraSalida() {
             exit();
         }
 
-        $instruccionSQL = 'UPDATE marcas SET HoraSalida = ? WHERE Fecha = ? AND Cedula = ?';
+        $instruccionSQL = 'UPDATE marcas SET hora = ? WHERE fecha = ? AND cedula = ? AND idTipoMarca = 4';
         $comando = $conexion->prepare($instruccionSQL);
 
         if ($comando) {
@@ -192,8 +286,7 @@ function insertarHoraSalida() {
     }
     
 function insertarHoraSalidaAlmuerzo() {
-        //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
-
+    include './config.php';
     if ($conexion->connect_errno) {
             echo "<script>
                 Swal.fire({
@@ -205,7 +298,7 @@ function insertarHoraSalidaAlmuerzo() {
             exit();
         }
 
-        $instruccionSQL = 'UPDATE marcas SET HoraSalidaAlmuerzo = ? WHERE Fecha = ? AND Cedula = ?';
+        $instruccionSQL = 'UPDATE marcas SET hora = ? WHERE Fecha = ? AND Cedula = ? AND idTipoMarca = 2';
         $comando = $conexion->prepare($instruccionSQL);
 
         if ($comando) {
@@ -231,8 +324,7 @@ function insertarHoraSalidaAlmuerzo() {
     }
     
     function insertarHoraEntradaAlmuerzo() {
-        //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
-
+        include './config.php';
         if ($conexion->connect_errno) {
             echo "<script>
                 Swal.fire({
@@ -244,7 +336,7 @@ function insertarHoraSalidaAlmuerzo() {
             exit();
         }
 
-        $instruccionSQL = 'UPDATE marcas SET HoraEntradaAlmuerzo = ? WHERE Fecha = ? AND Cedula = ?';
+        $instruccionSQL = 'UPDATE marcas SET hora = ? WHERE Fecha = ? AND Cedula = ? AND idTipoMarca = 3';
         $comando = $conexion->prepare($instruccionSQL);
 
         if ($comando) {

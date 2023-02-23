@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Ecokhemia</title>
+        <title>TW-Asistencia</title>
         <link rel="stylesheet" href="css/EdicionAR.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -34,9 +34,9 @@
                 <select id="lista" name="lista">
                     <option selected disabled>Horario a establecer</option>
                     <option name="Ingreso">Ingreso</option>
-                    <option name="Salida">Salida</option>
                     <option name="Salida a Almuerzo">Salida a Almuerzo</option>
                     <option name="Entrada despues del almuerzo">Entrada despues de Almuerzo</option>
+                    <option name="Salida">Salida</option>
                 </select>
                             <!-- <input type="checkbox" name="00">
                             <p>¿Mantener sesion iniciada?</p>--> 
@@ -115,7 +115,7 @@
                         //    echo "<td>" . $row['Cedula'] . "</td>";
                         //    echo "<td>" . $row['Nombre'] . "</td>";
                         //echo "</tr>";
-                        $nombre = $row['Nombre'];
+                        $nombre = $row['nombre'];
                         //echo $cedula;
                         //echo $nombre;
                         //echo $ubicacion;
@@ -124,135 +124,24 @@
                     // Free result set
                     mysqli_free_result($result);
 
-
-                    $q = "SELECT COUNT(*) as contar from marcas where Cedula = '$cedula' AND Fecha = '$date'";
-                    $consulta = mysqli_query($conexion, $q);
-                    $array = mysqli_fetch_array($consulta);
-                        if ($array['contar'] == 0) {
-                        $FechaPerfil->setUser($cedula);
-                        $FechaPerfil->setDate($date);
-                        $FechaPerfil->setUbicacion($ubicacion);
-                        echo '<p>' . $FechaPerfil->insertarFechaPerfil() . '</p>';
-                        }
+                    //Entrada
                     if ($listR == "Ingreso") {
-                            date_default_timezone_set('America/Costa_Rica');
-                            $time = date("H:i");
-                            $cons = "SELECT COUNT(HoraIngreso) as contar from marcas where Cedula = '$cedula' AND Fecha = '$date'";
-                            $consulta = mysqli_query($conexion, $cons);
+                            $q = "SELECT COUNT(*) as contar from marcas where cedula = '$cedula' AND fecha = '$date' AND idTipoMarca = 1";
+                            $consulta = mysqli_query($conexion, $q);
                             $array = mysqli_fetch_array($consulta);
                             if ($array['contar'] == 0) {
+                            $FechaPerfil->setUser($cedula);
+                            $FechaPerfil->setDate($date);
+                            $FechaPerfil->setUbicacion($ubicacion);
+                            echo '<p>' . $FechaPerfil->insertarUsuarioIngreso() . '</p>';
+                            date_default_timezone_set('America/Costa_Rica');
+                            $time = date("H:i");
                             $FechaPerfil->setIngreso($time);
                             $FechaPerfil->setDate($date);
                             $FechaPerfil->setUser($cedula);
                             echo '<p>' . $FechaPerfil->insertarHoraIngreso(). '</p>';
-        
                             if(empty($_POST['Ub']) || $listR == ""){
-
                                 //Notificaciones sin Ubicación
-
-                            //inicio de envío de notificación por WhatsApp a César
-                            $curl = curl_init();
-                            curl_setopt_array($curl, [
-                                CURLOPT_PORT => "3020",
-                                CURLOPT_URL => "http://ws.tico.works/lead",
-                                CURLOPT_RETURNTRANSFER => true,
-                                CURLOPT_ENCODING => "",
-                                CURLOPT_MAXREDIRS => 10,
-                                CURLOPT_TIMEOUT => 30,
-                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                CURLOPT_CUSTOMREQUEST => "POST",
-                                CURLOPT_POSTFIELDS => "{\n  \"message\":\"Hola César! El colaborador $nombre, con la cédula $cedula ha registrado su inicio de labores, sin embargo, no se registró ninguna ubicación.\",\n  \"phone\":\"50683528129\"\n}",
-                                CURLOPT_HTTPHEADER => [
-                                "Content-Type: application/json"
-                            ],
-                        ]);
-                        $response = curl_exec($curl);
-                        $err = curl_error($curl);
-                        curl_close($curl);
-                        if ($err) {
-                            echo "cURL Error #:" . $err;
-                        } else {
-                            //echo $response;
-                            echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
-                        }
-                        echo '<script>console.log("Paso 2 Notificacion")</script>';
-                        //Final de envío de notificación por WhatsApp a César
-    
-                    }else{
-
-                    //Notificaciones con Ubicación
-
-                    //inicio de envío de notificación por WhatsApp a César
-                            $curl = curl_init();
-                            curl_setopt_array($curl, [
-                                CURLOPT_PORT => "3020",
-                                CURLOPT_URL => "http://ws.tico.works/lead",
-                                CURLOPT_RETURNTRANSFER => true,
-                                CURLOPT_ENCODING => "",
-                                CURLOPT_MAXREDIRS => 10,
-                                CURLOPT_TIMEOUT => 30,
-                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                CURLOPT_CUSTOMREQUEST => "POST",
-                                CURLOPT_POSTFIELDS => "{\n  \"message\":\"Hola César! El colaborador $nombre, con la cédula $cedula ha registrado su inicio de labores desde la ubicación: https://www.google.com/maps/search/?api=1&query=$latitude%2C$longitude\",\n  \"phone\":\"50683528129\"\n}",
-                                CURLOPT_HTTPHEADER => [
-                                "Content-Type: application/json"
-                            ],
-                        ]);
-                        $response = curl_exec($curl);
-                        $err = curl_error($curl);
-                        curl_close($curl);
-                        if ($err) {
-                            echo "cURL Error #:" . $err;
-                        } else {
-                            //echo $response;
-                            echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
-                        }
-                        echo '<script>console.log("Paso 2 Notificacion")</script>';
-                    //Final de envío de notificación por WhatsApp a César
-    
-                            }
-
-                            echo "<script>
-                        Swal.fire({
-                        icon: 'success',
-                        title: 'Enhorabuena...!',
-                        text: 'Hora de ingreso registrada..!',  
-                        })
-                        </script>";
-                            }else{
-                                echo "<script>
-                        Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...!',
-                        text: 'Ya ha registrado la hora de ingreso de hoy $date..!',  
-                        })
-                        </script>";
-                            }
-                    } else {
-                        if ($listR == "Salida") {
-                            date_default_timezone_set('America/Costa_Rica');
-                            $time = date("H:i");
-                            $cons = "SELECT COUNT(HoraSalida) as contar from marcas where Cedula = '$cedula' AND Fecha = '$date'";
-                            $consulta = mysqli_query($conexion, $cons);
-                            $array = mysqli_fetch_array($consulta);
-                            if ($array['contar'] > 0) {
-                                echo "<script>
-                        Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...!',
-                        text: 'Ya ha registrado su hora de salida de hoy $date..!',  
-                        })
-                        </script>";
-                            } else {
-                                $FechaPerfil->setSalida($time);
-                                $FechaPerfil->setDate($date);
-                                $FechaPerfil->setUser($cedula);
-                                echo '<p>' . $FechaPerfil->insertarHoraSalida() . '</p>';
-
-                                if(empty($_POST['Ub']) || $listR == ""){
-
-                                    //Notificaciones sin Ubicación
-    
                                 //inicio de envío de notificación por WhatsApp a César
                                 $curl = curl_init();
                                 curl_setopt_array($curl, [
@@ -264,11 +153,40 @@
                                     CURLOPT_TIMEOUT => 30,
                                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                                     CURLOPT_CUSTOMREQUEST => "POST",
-                                    CURLOPT_POSTFIELDS => "{\n  \"message\":\"Hola César! El colaborador $nombre, con la cédula $cedula ha registrado su finalización de labores, sin embargo, no se registró ninguna ubicación.\",\n  \"phone\":\"50683528129\"\n}",
+                                    CURLOPT_POSTFIELDS => "{\n  \"message\":\"Hola César! El colaborador $nombre, con la cédula $cedula ha registrado su inicio de labores, sin embargo, no se registró ninguna ubicación.\",\n  \"phone\":\"50683528129\"\n}",
                                     CURLOPT_HTTPHEADER => [
                                     "Content-Type: application/json"
-                                ],
-                            ]);
+                                    ],
+                                ]);
+                            $response = curl_exec($curl);
+                            $err = curl_error($curl);
+                            curl_close($curl);
+                                if ($err) {
+                                    echo "cURL Error #:" . $err;
+                                } else {
+                                //echo $response;
+                                echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
+                                }
+                                echo '<script>console.log("Paso 2 Notificacion")</script>';
+                                //Final de envío de notificación por WhatsApp a César
+                                }else{
+                                //Notificaciones con Ubicación
+                                //inicio de envío de notificación por WhatsApp a César
+                                $curl = curl_init();
+                                curl_setopt_array($curl, [
+                                    CURLOPT_PORT => "3020",
+                                    CURLOPT_URL => "http://ws.tico.works/lead",
+                                    CURLOPT_RETURNTRANSFER => true,
+                                    CURLOPT_ENCODING => "",
+                                    CURLOPT_MAXREDIRS => 10,
+                                    CURLOPT_TIMEOUT => 30,
+                                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                    CURLOPT_CUSTOMREQUEST => "POST",
+                                    CURLOPT_POSTFIELDS => "{\n  \"message\":\"Hola César! El colaborador $nombre, con la cédula $cedula ha registrado su inicio de labores desde la ubicación: https://www.google.com/maps/search/?api=1&query=$latitude%2C$longitude\",\n  \"phone\":\"50683528129\"\n}",
+                                    CURLOPT_HTTPHEADER => [
+                                    "Content-Type: application/json"
+                                    ],
+                                ]);
                             $response = curl_exec($curl);
                             $err = curl_error($curl);
                             curl_close($curl);
@@ -280,74 +198,138 @@
                             }
                             echo '<script>console.log("Paso 2 Notificacion")</script>';
                             //Final de envío de notificación por WhatsApp a César
-    
+                            }
+                            echo "<script>
+                            Swal.fire({
+                            icon: 'success',
+                            title: 'Enhorabuena...!',
+                            text: 'Hora de ingreso registrada..!',  
+                            })
+                            </script>";
                                 }else{
-    
-                                //Notificaciones con Ubicación
-    
-                                //inicio de envío de notificación por WhatsApp a César
-                                $curl = curl_init();
-                                curl_setopt_array($curl, [
-                                    CURLOPT_PORT => "3020",
-                                    CURLOPT_URL => "http://ws.tico.works/lead",
-                                    CURLOPT_RETURNTRANSFER => true,
-                                    CURLOPT_ENCODING => "",
-                                    CURLOPT_MAXREDIRS => 10,
-                                    CURLOPT_TIMEOUT => 30,
-                                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                    CURLOPT_CUSTOMREQUEST => "POST",
-                                    CURLOPT_POSTFIELDS => "{\n  \"message\":\"Hola César! El colaborador $nombre, con la cédula $cedula ha registrado su finalización de labores desde la ubicación: https://www.google.com/maps/search/?api=1&query=$latitude%2C$longitude\",\n  \"phone\":\"50683528129\"\n}",
-                                    CURLOPT_HTTPHEADER => [
-                                    "Content-Type: application/json"
-                                ],
-                            ]);
-                            $response = curl_exec($curl);
-                            $err = curl_error($curl);
-                            curl_close($curl);
-                            if ($err) {
-                                echo "cURL Error #:" . $err;
-                            } else {
-                                //echo $response;
-                                echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
-                            }
-                            echo '<script>console.log("Paso 2 Notificacion")</script>';
-                            //Final de envío de notificación por WhatsApp a César  
-    
+                                    echo "<script>
+                                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...!',
+                                        text: 'Ya ha registrado la hora de ingreso de hoy $date..!',  
+                                        })
+                                    </script>";
                                 }
-
-                        echo "<script>
-                        Swal.fire({
-                        icon: 'success',
-                        title: 'Enhorabuena...!',
-                        text: 'Hora de salida registrada..!',  
-                        })
-                        </script>";
-                            }
-                        } else {
-                            if ($listR == "Salida a Almuerzo") {
+                    //Salida
+                    } else {
+                        if ($listR == "Salida") {
+                            $q = "SELECT COUNT(*) as contar from marcas where cedula = '$cedula' AND fecha = '$date' AND idTipoMarca = 4";
+                            $consulta = mysqli_query($conexion, $q);
+                            $array = mysqli_fetch_array($consulta);
+                            if ($array['contar'] == 0) {
+                                $FechaPerfil->setUser($cedula);
+                                $FechaPerfil->setDate($date);
+                                $FechaPerfil->setUbicacion($ubicacion);
+                                echo '<p>' . $FechaPerfil->insertarUsuarioSalida() . '</p>';
                                 date_default_timezone_set('America/Costa_Rica');
                                 $time = date("H:i");
-                                $cons = "SELECT COUNT(HoraSalidaAlmuerzo) as contar from marcas where Cedula = '$cedula' AND Fecha = '$date'";
-                                $consulta = mysqli_query($conexion, $cons);
-                                $array = mysqli_fetch_array($consulta);
-                                if ($array['contar'] > 0) {
+                                $FechaPerfil->setSalida($time);
+                                $FechaPerfil->setDate($date);
+                                $FechaPerfil->setUser($cedula);
+                                echo '<p>' . $FechaPerfil->insertarHoraSalida() . '</p>';
+                                if(empty($_POST['Ub']) || $listR == ""){
+                                    //Notificaciones sin Ubicación
+                                    //inicio de envío de notificación por WhatsApp a César
+                                    $curl = curl_init();
+                                    curl_setopt_array($curl, [
+                                        CURLOPT_PORT => "3020",
+                                        CURLOPT_URL => "http://ws.tico.works/lead",
+                                        CURLOPT_RETURNTRANSFER => true,
+                                        CURLOPT_ENCODING => "",
+                                        CURLOPT_MAXREDIRS => 10,
+                                        CURLOPT_TIMEOUT => 30,
+                                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                        CURLOPT_CUSTOMREQUEST => "POST",
+                                        CURLOPT_POSTFIELDS => "{\n  \"message\":\"Hola César! El colaborador $nombre, con la cédula $cedula ha registrado su finalización de labores, sin embargo, no se registró ninguna ubicación.\",\n  \"phone\":\"50683528129\"\n}",
+                                        CURLOPT_HTTPHEADER => [
+                                        "Content-Type: application/json"
+                                        ],
+                                    ]);
+                                    $response = curl_exec($curl);
+                                    $err = curl_error($curl);
+                                    curl_close($curl);
+                                    if ($err) {
+                                        echo "cURL Error #:" . $err;
+                                    } else {
+                                        //echo $response;
+                                        echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
+                                    }
+                                    echo '<script>console.log("Paso 2 Notificacion")</script>';
+                                    //Final de envío de notificación por WhatsApp a César
+
+                                    }else{
+
+                                    //Notificaciones con Ubicación
+
+                                    //inicio de envío de notificación por WhatsApp a César
+                                    $curl = curl_init();
+                                    curl_setopt_array($curl, [
+                                        CURLOPT_PORT => "3020",
+                                        CURLOPT_URL => "http://ws.tico.works/lead",
+                                        CURLOPT_RETURNTRANSFER => true,
+                                        CURLOPT_ENCODING => "",
+                                        CURLOPT_MAXREDIRS => 10,
+                                        CURLOPT_TIMEOUT => 30,
+                                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                        CURLOPT_CUSTOMREQUEST => "POST",
+                                        CURLOPT_POSTFIELDS => "{\n  \"message\":\"Hola César! El colaborador $nombre, con la cédula $cedula ha registrado su finalización de labores desde la ubicación: https://www.google.com/maps/search/?api=1&query=$latitude%2C$longitude\",\n  \"phone\":\"50683528129\"\n}",
+                                        CURLOPT_HTTPHEADER => [
+                                        "Content-Type: application/json"
+                                        ],
+                                    ]);
+                                    $response = curl_exec($curl);
+                                    $err = curl_error($curl);
+                                    curl_close($curl);
+                                    if ($err) {
+                                        echo "cURL Error #:" . $err;
+                                    } else {
+                                    //echo $response;
+                                    echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
+                                    }
+                                    echo '<script>console.log("Paso 2 Notificacion")</script>';
+                                    //Final de envío de notificación por WhatsApp a César  
+                                    }
                                     echo "<script>
-                                Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...!',
-                                text: 'Ya ha registrado su hora de salida a almuerzo de hoy $date..!',  
-                                })
-                                </script>";
+                                        Swal.fire({
+                                        icon: 'success',
+                                        title: 'Enhorabuena...!',
+                                        text: 'Hora de salida registrada..!',  
+                                        })
+                                    </script>";
                                 } else {
-                                    $FechaPerfil->setSalidaAlmuerzo($time);
-                                    $FechaPerfil->setDate($date);
-                                    $FechaPerfil->setUser($cedula);
-                                    echo '<p>' . $FechaPerfil->insertarHoraSalidaAlmuerzo() . '</p>';
+                                    echo "<script>
+                                        Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...!',
+                                        text: 'Ya ha registrado su hora de salida de hoy $date..!',  
+                                        })
+                                    </script>";
+                                }
 
-                                    if(empty($_POST['Ub']) || $listR == ""){
-
-                                        //Notificaciones sin Ubicación
-        
+                    //Salida a almuerzo
+                    } else {
+                        if ($listR == "Salida a Almuerzo") {
+                            $q = "SELECT COUNT(*) as contar from marcas where cedula = '$cedula' AND fecha = '$date' AND idTipoMarca = 2";
+                            $consulta = mysqli_query($conexion, $q);
+                            $array = mysqli_fetch_array($consulta);
+                            if ($array['contar'] == 0) {
+                                $FechaPerfil->setUser($cedula);
+                                $FechaPerfil->setDate($date);
+                                $FechaPerfil->setUbicacion($ubicacion);
+                                echo '<p>' . $FechaPerfil->insertarUsuarioSalidaAlmuerzo() . '</p>';
+                                date_default_timezone_set('America/Costa_Rica');
+                                $time = date("H:i");
+                                $FechaPerfil->setSalidaAlmuerzo($time);
+                                $FechaPerfil->setDate($date);
+                                $FechaPerfil->setUser($cedula);
+                                echo '<p>' . $FechaPerfil->insertarHoraSalidaAlmuerzo() . '</p>';
+                                if(empty($_POST['Ub']) || $listR == ""){
+                                    //Notificaciones sin Ubicación
                                     //inicio de envío de notificación por WhatsApp a César
                                     $curl = curl_init();
                                     curl_setopt_array($curl, [
@@ -364,86 +346,85 @@
                                         "Content-Type: application/json"
                                     ],
                                 ]);
-                                $response = curl_exec($curl);
-                                $err = curl_error($curl);
-                                curl_close($curl);
-                                if ($err) {
-                                    echo "cURL Error #:" . $err;
-                                } else {
-                                    //echo $response;
-                                    echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
-                                }
-                                echo '<script>console.log("Paso 2 Notificacion")</script>';
-                                //Final de envío de notificación por WhatsApp a César        
-        
-                                    }else{
-        
-                                    //Notificaciones con Ubicación
-        
-                                    //inicio de envío de notificación por WhatsApp a César
-                                    $curl = curl_init();
-                                    curl_setopt_array($curl, [
-                                        CURLOPT_PORT => "3020",
-                                        CURLOPT_URL => "http://ws.tico.works/lead",
-                                        CURLOPT_RETURNTRANSFER => true,
-                                        CURLOPT_ENCODING => "",
-                                        CURLOPT_MAXREDIRS => 10,
-                                        CURLOPT_TIMEOUT => 30,
-                                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                        CURLOPT_CUSTOMREQUEST => "POST",
-                                        CURLOPT_POSTFIELDS => "{\n  \"message\":\"Hola César! El colaborador $nombre, con la cédula $cedula ha registrado su salida a almuerzo desde la ubicación: https://www.google.com/maps/search/?api=1&query=$latitude%2C$longitude\",\n  \"phone\":\"50683528129\"\n}",
-                                        CURLOPT_HTTPHEADER => [
-                                        "Content-Type: application/json"
-                                    ],
-                                ]);
-                                $response = curl_exec($curl);
-                                $err = curl_error($curl);
-                                curl_close($curl);
-                                if ($err) {
-                                    echo "cURL Error #:" . $err;
-                                } else {
-                                    //echo $response;
-                                    echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
-                                }
-                                echo '<script>console.log("Paso 2 Notificacion")</script>';
-                                //Final de envío de notificación por WhatsApp a César       
-        
-                                    }
+                            $response = curl_exec($curl);
+                            $err = curl_error($curl);
+                            curl_close($curl);
+                            if ($err) {
+                                echo "cURL Error #:" . $err;
+                            } else {
+                                //echo $response;
+                                echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
+                            }
+                            echo '<script>console.log("Paso 2 Notificacion")</script>';
+                            //Final de envío de notificación por WhatsApp a César        
+                            }else{
+                                //Notificaciones con Ubicación
 
-
-                                    echo "<script>
+                                //inicio de envío de notificación por WhatsApp a César
+                                $curl = curl_init();
+                                curl_setopt_array($curl, [
+                                    CURLOPT_PORT => "3020",
+                                    CURLOPT_URL => "http://ws.tico.works/lead",
+                                    CURLOPT_RETURNTRANSFER => true,
+                                    CURLOPT_ENCODING => "",
+                                    CURLOPT_MAXREDIRS => 10,
+                                    CURLOPT_TIMEOUT => 30,
+                                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                    CURLOPT_CUSTOMREQUEST => "POST",
+                                    CURLOPT_POSTFIELDS => "{\n  \"message\":\"Hola César! El colaborador $nombre, con la cédula $cedula ha registrado su salida a almuerzo desde la ubicación: https://www.google.com/maps/search/?api=1&query=$latitude%2C$longitude\",\n  \"phone\":\"50683528129\"\n}",
+                                    CURLOPT_HTTPHEADER => [
+                                    "Content-Type: application/json"
+                                ],
+                            ]);
+                            $response = curl_exec($curl);
+                            $err = curl_error($curl);
+                            curl_close($curl);
+                            if ($err) {
+                                echo "cURL Error #:" . $err;
+                            } else {
+                                //echo $response;
+                                echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
+                            }
+                            echo '<script>console.log("Paso 2 Notificacion")</script>';
+                            //Final de envío de notificación por WhatsApp a César       
+                            }
+                            echo "<script>
+                            Swal.fire({
+                            icon: 'success',
+                            title: 'Enhorabuena...!',
+                            text: 'Hora de salida a almuerzo registrada..!',  
+                            })
+                            </script>";
+                            } else {
+                                echo "<script>
                                 Swal.fire({
-                                icon: 'success',
-                                title: 'Enhorabuena...!',
-                                text: 'Hora de salida a almuerzo registrada..!',  
+                                icon: 'error',
+                                title: 'Oops...!',
+                                text: 'Ya ha registrado su hora de salida a almuerzo de hoy $date..!',  
                                 })
                                 </script>";
-                                }
-                            } else {
-                            if ($listR == "Entrada despues de Almuerzo") {
+                            }
+
+
+                    //Entrada después de almuerzo
+                    } else {
+                        if ($listR == "Entrada despues de Almuerzo") {
+                            $q = "SELECT COUNT(*) as contar from marcas where cedula = '$cedula' AND fecha = '$date' AND idTipoMarca = 3";
+                            $consulta = mysqli_query($conexion, $q);
+                            $array = mysqli_fetch_array($consulta);
+                            if ($array['contar'] == 0) {
+                                $FechaPerfil->setUser($cedula);
+                                $FechaPerfil->setDate($date);
+                                $FechaPerfil->setUbicacion($ubicacion);
+                                echo '<p>' . $FechaPerfil->insertarUsuarioEntradaAlmuerzo() . '</p>';
                                 date_default_timezone_set('America/Costa_Rica');
                                 $time = date("H:i");
-                                $cons = "SELECT COUNT(HoraEntradaAlmuerzo) as contar from marcas where Cedula = '$cedula' AND Fecha = '$date'";
-                                $consulta = mysqli_query($conexion, $cons);
-                                $array = mysqli_fetch_array($consulta);
-                                if ($array['contar'] > 0) {
-                                    echo "<script>
-                                    Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...!',
-                                    text: 'Ya ha registrado su hora de entrada del almuerzo de hoy $date..!',  
-                                    })
-                                    </script>";
-                                } else {
-                                    $FechaPerfil->setEntradaAlmuerzo($time);
-                                    $FechaPerfil->setDate($date);
-                                    $FechaPerfil->setUser($cedula);
-                                    echo '<p>' . $FechaPerfil->insertarHoraEntradaAlmuerzo() . '</p>';
-
-                                    if(empty($_POST['Ub']) || $listR == ""){
-
-                                        //Notificaciones sin Ubicación
-        
+                                $FechaPerfil->setEntradaAlmuerzo($time);
+                                $FechaPerfil->setDate($date);
+                                $FechaPerfil->setUser($cedula);
+                                echo '<p>' . $FechaPerfil->insertarHoraEntradaAlmuerzo() . '</p>';
+                                if(empty($_POST['Ub']) || $listR == ""){
+                                    //Notificaciones sin Ubicación
                                     //inicio de envío de notificación por WhatsApp a César
                                     $curl = curl_init();
                                     curl_setopt_array($curl, [
@@ -458,24 +439,21 @@
                                         CURLOPT_POSTFIELDS => "{\n  \"message\":\"Hola César! El colaborador $nombre, con la cédula $cedula ha registrado su entrada después de almuerzo, sin embargo, no se registró ninguna ubicación.\",\n  \"phone\":\"50683528129\"\n}",
                                         CURLOPT_HTTPHEADER => [
                                         "Content-Type: application/json"
-                                    ],
-                                ]);
-                                $response = curl_exec($curl);
-                                $err = curl_error($curl);
-                                curl_close($curl);
-                                if ($err) {
-                                    echo "cURL Error #:" . $err;
-                                } else {
-                                    //echo $response;
-                                    echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
-                                }
-                                echo '<script>console.log("Paso 2 Notificacion")</script>';
-                                //Final de envío de notificación por WhatsApp a César       
-        
-                                    }else{
-        
+                                        ],
+                                    ]);
+                                    $response = curl_exec($curl);
+                                    $err = curl_error($curl);
+                                    curl_close($curl);
+                                    if ($err) {
+                                        echo "cURL Error #:" . $err;
+                                    } else {
+                                        //echo $response;
+                                        echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
+                                    }
+                                    echo '<script>console.log("Paso 2 Notificacion")</script>';
+                                    //Final de envío de notificación por WhatsApp a César       
+                                }else{
                                     //Notificaciones con Ubicación
-        
                                     //inicio de envío de notificación por WhatsApp a César
                                     $curl = curl_init();
                                     curl_setopt_array($curl, [
@@ -490,67 +468,71 @@
                                         CURLOPT_POSTFIELDS => "{\n  \"message\":\"Hola César! El colaborador $nombre, con la cédula $cedula ha registrado su entrada después de almuerzo desde la ubicación: https://www.google.com/maps/search/?api=1&query=$latitude%2C$longitude\",\n  \"phone\":\"50683528129\"\n}",
                                         CURLOPT_HTTPHEADER => [
                                         "Content-Type: application/json"
-                                    ],
-                                ]);
-                                $response = curl_exec($curl);
-                                $err = curl_error($curl);
-                                curl_close($curl);
-                                if ($err) {
-                                    echo "cURL Error #:" . $err;
-                                } else {
-                                    //echo $response;
-                                    echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
-                                }
-                                echo '<script>console.log("Paso 2 Notificacion")</script>';
-                                //Final de envío de notificación por WhatsApp a César       
-        
+                                        ],
+                                    ]);
+                                    $response = curl_exec($curl);
+                                    $err = curl_error($curl);
+                                    curl_close($curl);
+                                    if ($err) {
+                                        echo "cURL Error #:" . $err;
+                                    } else {
+                                        //echo $response;
+                                        echo '<script>console.log("Notificación enviada por WhatsApp exitosamente...")</script>';
                                     }
+                                    echo '<script>console.log("Paso 2 Notificacion")</script>';
+                                    //Final de envío de notificación por WhatsApp a César       
+                                }
 
-                                    echo "<script>
-                                Swal.fire({
-                                icon: 'success',
-                                title: 'Enhorabuena...!',
-                                text: 'Hora de entrada del almuerzo registrada..!',  
-                                })
-                                </script>";
-                                }
-                            } else {
-                                if(empty($_POST['ced']) || $listR == ""){
                                 echo "<script>
-                                Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...!',
-                                text: 'Debe completar el formulario..!',  
-                                })
-                                </script>";    
+                                    Swal.fire({
+                                    icon: 'success',
+                                    title: 'Enhorabuena...!',
+                                    text: 'Hora de entrada del almuerzo registrada..!',  
+                                    })
+                                </script>";
+                            } else {
+                                echo "<script>
+                                    Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...!',
+                                    text: 'Ya ha registrado su hora de entrada del almuerzo de hoy $date..!',  
+                                    })
+                                    </script>";
                                 }
-                            }
-                        }
+                    } else {
+                        if(empty($_POST['ced']) || $listR == ""){
+                        echo "<script>
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...!',
+                            text: 'Debe completar el formulario..!',  
+                            })
+                            </script>";    
                         }
                     }
-     
-                } else {
-                echo "<script>
-                Swal.fire({
-                icon: 'error',
-                title: 'Lo sentimos!',
-                text: 'La cédula ingresada no corresponde a ningún colaborador de Ecokhemia!',  
-                })
-                </script>";
                 }
-            } else{
-                echo "ERROR: Could not able to execute $sql. " . mysqli_error($conexion);
             }
-            //Final de consulta de usuario
-
-
         }
-
+     
+    } else {
+        echo "<script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Lo sentimos!',
+            text: 'La cédula ingresada no corresponde a ningún colaborador de Ecokhemia!',  
+            })
+            </script>";
+            }
+        } else{
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($conexion);
+        }
+        //Final de consulta de usuario
+        }
     }
-    } catch (Exception $e) {
+} catch (Exception $e) {
         log_exception($e);
-    }
+}
 
-    ?>
+?>
 </body>
 </html>

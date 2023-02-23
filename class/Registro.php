@@ -37,6 +37,7 @@ class Registro {
     }
 
     function insertarPerfil() {
+        include './config.php';
         //$conexion = new mysqli("107.180.13.125", "asist-ecok", "CkowfYQ34JJdQ8Um4ILE", "asistencia-ecokhemia");
         if ($conexion->connect_errno) {
             exit();
@@ -52,7 +53,7 @@ class Registro {
         echo '<script>console.log("TicoWorks says: Conexión Establecida")</script>';
         }
         
-        $comando = $conexion->prepare('INSERT INTO Perfiles(Cedula, Nombre, Password) VALUES (?,?,?);');
+        $comando = $conexion->prepare('INSERT INTO usuarios(Cedula, Nombre, Password) VALUES (?,?,?);');
         
             echo '<script>console.log("TicoWorks says: Paso 1")</script>';
             if ($comando) {

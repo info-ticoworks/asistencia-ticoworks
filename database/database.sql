@@ -34,6 +34,13 @@ PRIMARY KEY (id),
 FOREIGN KEY (cedula) REFERENCES usuario (cedula)
 );
 
+CREATE TABLE tipoMarca (
+idTipoMarca int,
+nombreTipoMarca varchar (50),
+PRIMARY KEY (id),
+FOREIGN KEY (idTipoMarca) REFERENCES marcas (idTipoMarca)
+);
+
 CREATE TABLE notificaciones (
 cedula int not null,
 telefono int not null,
