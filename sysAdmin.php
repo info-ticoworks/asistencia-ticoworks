@@ -14,14 +14,26 @@
 
         <!--    Datatables  -->
             <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>  
-
-
-
-
 </head>
-
+<header id="header">
+        <nav class="menu">
+            <div class="logo-box">
+            </div>
+            <div class="logo-box">
+                <span class="btn-menu"><i class="fas fa-bars"></i></span>
+            </div>
+            <div class="list-container">        
+                <ul class="lists">
+                    <li><a href="frmHora.php"><span class="icon-user-check"></span>Registrar hora</a></li>
+                    <li><a href="frmAcceder.php"><span class="icon-user-check"></span>Iniciar Sesión</a></li>
+                    <li><a href="frmRegistro.php"><span class="icon-user-plus"></span>Registrarse</a></li>
+                    <li><a href="sysAdmin.php"><span class="icon-user-plus"></span>Administración</a></li>
+                </ul>
+            </div>
+        </nav>
+        <script src="js/funcion.js"></script>
+    </header>
 <body>
-
 
 </body>
 </html>

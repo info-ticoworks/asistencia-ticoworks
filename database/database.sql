@@ -17,6 +17,8 @@ pass varchar (30) not null,
 telefono int not null,
 correo varchar (30) not null,
 idTipoUsuario int not null,
+mailNotif int not null,
+wsNotif int not null,
 PRIMARY KEY (cedula),
 FOREIGN KEY (idTipoUsuario) REFERENCES tipoUsuario (idTipoUsuario)
 );
