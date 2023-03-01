@@ -196,7 +196,7 @@ p{
 
     .form-box {
         width: 95%;
-        height: 95%;
+        height: 85%;
     }
 
     .form-box input[type="text"]:focus, .form-box input[type="password"]:focus {
