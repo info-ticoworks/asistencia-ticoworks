@@ -2,6 +2,12 @@
 session_start();
 include './config.php';
 $cedula = $_SESSION['cedula'];
+$nombre = $_SESSION['nombre'];
+$apellido1 = $_SESSION['apellido1'];
+$telefono = $_SESSION['telefono'];
+$correo = $_SESSION['correo'];
+$idTipoUsuario = $_SESSION['idTipoUsuario'];
+$wsNotif = $_SESSION['wsNotif'];
 if(!isset($cedula)){
     // header ("Location: rediriges a la pagina de logueo".)
     header("Location: ./index.php");
@@ -41,7 +47,8 @@ if(!isset($cedula)){
         <form action="frmHora.php" class="form-box" method="POST"> 
             <p><img alt="" width="280" height="216" src="./image/logo1.png"></p> 
                 <h3 class="form-title">Registrar hora</h3>
-                <input type="text" placeholder="Cédula" name="ced" id="ced" autofocus>
+                <h3 class="form-title">Hola <?php echo $nombre?> <?php echo $apellido1?> </h3>
+
                 <select id="lista" name="lista">
                     <option selected disabled>Horario a establecer</option>
                     <option name="Entrada">Entrada</option>
@@ -52,7 +59,7 @@ if(!isset($cedula)){
                             <!-- <input type="checkbox" name="00">
                             <p>¿Mantener sesion iniciada?</p>--> 
             <input type="submit" value="Registrar marca" name="btEnviar" id="btEnviar">
-            <p>¿Ya has registrado la hora? <a class="volver" href="./index.php">Volver atras</a></p>
+            <input type="submit" value="Cerrar Sesión" name="btSalir" id="btSalir">
             <input type="hidden" id="Ub" name="Ub" readonly>
             <input type="hidden" id="latitud" name="latitud" readonly>
             <input type="hidden" id="longitud" name="longitud" readonly>
@@ -81,8 +88,8 @@ if(!isset($cedula)){
             echo '<script>console.log("Paso 1")</script>';
             require './class/FechaPerfil.php';
             echo '<script>console.log("Paso 3")</script>';
-            require './notiWhats.php';
-            echo '<script>console.log("Paso 5")</script>';
+            //require './notiWhats.php';
+            //echo '<script>console.log("Paso 5")</script>';
             $FechaPerfil = new FechaPerfil();
             if(empty($_POST['lista'])) {
                 echo "<script>
@@ -95,13 +102,10 @@ if(!isset($cedula)){
             } else {
                 $listR = $_POST["lista"];
             }
-            $cedula = ($_POST['ced']);
             $date = date("y-m-d");
             $ubicacion = $_POST['Ub'];
             $latitude = $_POST['latitud'];
             $longitude = $_POST['longitud'];
-            $nombre = "";
-            $apellido = "";
             // coordinates
             //echo 'Latitud: ' . $latitude;
             //echo 'Longitud: ' . $longitude;
@@ -111,7 +115,7 @@ if(!isset($cedula)){
                 // produces output
                 // Address: 58 Brooklyn Ave, Brooklyn, NY 11216, USA
 
-            if(empty($_POST['ced']) || empty($_POST['lista'])){
+            if(empty($cedula) || empty($_POST['lista'])){
                 echo "<script>
                 Swal.fire({
                 icon: 'error',
@@ -125,13 +129,13 @@ if(!isset($cedula)){
             $sql = "SELECT * FROM usuarios where cedula = $cedula";
             if($result = mysqli_query($conexion, $sql)){
                 if(mysqli_num_rows($result) > 0){
-                    while($row = mysqli_fetch_array($result)){
-                        $nombre = $row['nombre'];
-                        $apellido1 = $row['apellido1'];
-                    }
-                    echo "</table>";
+                    //while($row = mysqli_fetch_array($result)){
+                        //$nombre = $row['nombre'];
+                        //$apellido1 = $row['apellido1'];
+                    //}
+                    //echo "</table>";
                     // Free result set
-                    mysqli_free_result($result);
+                    //mysqli_free_result($result);
 
                     //Entrada
                     if ($listR == "Entrada") {
@@ -640,7 +644,7 @@ if(!isset($cedula)){
                                         </script>";
                                     }
                     } else {
-                        if(empty($_POST['ced']) || $listR == ""){
+                        if(empty($cedula) || $listR == ""){
                             echo "<script>
                             Swal.fire({
                             icon: 'error',
@@ -653,25 +657,32 @@ if(!isset($cedula)){
                 }
             }
         }
-    } else {
-        echo "<script>
-            Swal.fire({
-            icon: 'error',
-            title: 'Lo sentimos $nombre!',
-            text: 'La cédula ingresada no corresponde a ningún colaborador de TicoWorks!',  
-            })
-            </script>";
-            header("Refresh:5");
+                } else {
+                    echo "<script>
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Lo sentimos $nombre!',
+                    text: 'La cédula ingresada no corresponde a ningún colaborador de TicoWorks!',  
+                    })
+                    </script>";
+                    header("Refresh:5");
+                }
+            } else{
+                echo "ERROR: Could not able to execute $sql. " . mysqli_error($conexion);
             }
-        } else{
-            echo "ERROR: Could not able to execute $sql. " . mysqli_error($conexion);
-        }
-        //Final de consulta de usuario
+            //Final de consulta de usuario
         }
     }
 } catch (Exception $e) {
         log_exception($e);
 }
+    try {
+        if (isset($_POST['btSalir'])) {
+            header("Location: ./index.php");
+        }
+    } catch (Exception $e) {
+        log_exception($e);
+    }
 
 ?>
 </body>

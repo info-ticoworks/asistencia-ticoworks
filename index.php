@@ -60,6 +60,12 @@ session_start();
                     $idTipoUsuario = $row ['idTipoUsuario'];
                     $ced = $row ['cedula'];
                     $_SESSION['cedula'] = $row ['cedula'];
+                    $_SESSION['nombre'] = $row ['nombre'];
+                    $_SESSION['apellido1'] = $row ['apellido1'];
+                    $_SESSION['telefono'] = $row ['telefono'];
+                    $_SESSION['correo'] = $row ['correo'];
+                    $_SESSION['idTipoUsuario'] = $row ['idTipoUsuario'];
+                    $_SESSION['wsNotif'] = $row ['wsNotif'];
                     if($idTipoUsuario == "1" || $idTipoUsuario == "2" || $idTipoUsuario == "3"){
                         header("Location: frmHora.php");
                     }else if($idTipoUsuario == "4"){

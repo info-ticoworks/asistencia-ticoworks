@@ -1,4 +1,10 @@
 <?php
+session_start();
+$cedula = $_SESSION['cedula'];
+if(!isset($cedula)){
+    // header ("Location: rediriges a la pagina de logueo".)
+    header("Location: ./index.php");
+}
 
 echo '<script>console.log("Carga de archivo NotiWhats")</script>';
     function notiEntradaSinUbicacion() {

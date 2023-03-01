@@ -1,3 +1,13 @@
+<?php
+session_start();
+include './config.php';
+$cedula = $_SESSION['cedula'];
+if(!isset($cedula)){
+    // header ("Location: rediriges a la pagina de logueo".)
+    header("Location: ./index.php");
+}
+?>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
 
