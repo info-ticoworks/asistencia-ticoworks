@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Ecokhemia</title>
+        <title>TW-Asistencia</title>
         <link rel="stylesheet" href="css/EdicionAR.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -12,7 +12,7 @@
 
     <body>
         <form action="frmAcceder.php" class="form-box" method="POST"> 
-            <p><img alt="" width="280" height="135" src="image/Sinfondo.png"></p> 
+            <p><img alt="" width="280" height="216" src="image/logo1.png"></p> 
             <h3 class="form-title">Iniciar Sesion</h3>
             <input type="text" placeholder="Cedula" name="ced" id="ced" autofocus>
             <input type="password" placeholder="Contraseña" name="passc" id="passc">
@@ -22,8 +22,8 @@
             </div>
 
             <input type="submit" value="Acceder" name="btverificar" id="btverificar">
-            <p>¿Olvidaste tu contraseña? <a class="" href="/frmRecuperarContrasena.php">Recuperar</a></p>
-            <p><a class="" href="/index.php">Volver atras</a></p>
+            <p>¿Olvidaste tu contraseña? <a class="volver" href="/frmRecuperarContrasena.php">Recuperar</a></p>
+            <p><a class="volver" href="./index.php">Volver atras</a></p>
             <?php
             if (isset($_POST['btverificar'])) {
                 require './config.php';

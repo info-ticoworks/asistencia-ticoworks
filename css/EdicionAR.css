@@ -38,7 +38,6 @@ p{
 
 .form-title {
     color: #fff;
-    text-transform: uppercase;
     font-weight: 500;
 }
 
@@ -56,7 +55,7 @@ p{
     padding: 14px 20px;
     width: 220px;
     outline: none;
-    border-radius: 20px;
+    border-radius: 10px;
     transition: 0.23s;
 }
 
@@ -75,7 +74,7 @@ p{
     width: 220px;
     outline: none;
     color: white;
-    border-radius: 20px;
+    border-radius: 10px;
     transition: 0.23s;
 
 }
@@ -102,6 +101,15 @@ p{
 
 .form-box button[type="submit"]:hover {
     background: none;
+}
+
+.volver {
+    color: #33ffff;
+}
+
+.volver:hover, a:focus {
+    color: #5c7575;
+    animation-delay: 500ms;
 }
 
   

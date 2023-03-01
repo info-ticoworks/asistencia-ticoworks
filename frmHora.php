@@ -12,6 +12,7 @@
     <body>
 
         <script type="text/javascript">
+            header("Refresh:0");
            if (typeof navigator.geolocation == 'object'){
                navigator.geolocation.getCurrentPosition(mostrar_ubicacion);
            }
@@ -28,20 +29,20 @@
         </script>
 
         <form action="frmHora.php" class="form-box" method="POST"> 
-            <p><img alt="" width="280" height="135" src="./image/Sinfondo.png"></p> 
+            <p><img alt="" width="280" height="216" src="./image/logo1.png"></p> 
                 <h3 class="form-title">Registrar hora</h3>
-                <input type="text" placeholder="Cedula" name="ced" id="ced" autofocus>
+                <input type="text" placeholder="Cédula" name="ced" id="ced" autofocus>
                 <select id="lista" name="lista">
                     <option selected disabled>Horario a establecer</option>
-                    <option name="Ingreso">Ingreso</option>
-                    <option name="Salida a Almuerzo">Salida a Almuerzo</option>
-                    <option name="Entrada despues del almuerzo">Entrada despues de Almuerzo</option>
+                    <option name="Entrada">Entrada</option>
+                    <option name="Salida a descanso">Salida a descanso</option>
+                    <option name="Entrada de descanso">Entrada de descanso</option>
                     <option name="Salida">Salida</option>
                 </select>
                             <!-- <input type="checkbox" name="00">
                             <p>¿Mantener sesion iniciada?</p>--> 
-            <input type="submit" value="Enviar" name="btEnviar" id="btEnviar">
-            <p>¿Ya has registrado la hora? <a class="" href="./">Volver atras</a></p>
+            <input type="submit" value="Registrar marca" name="btEnviar" id="btEnviar">
+            <p>¿Ya has registrado la hora? <a class="volver" href="./index.php">Volver atras</a></p>
             <input type="hidden" id="Ub" name="Ub" readonly>
             <input type="hidden" id="latitud" name="latitud" readonly>
             <input type="hidden" id="longitud" name="longitud" readonly>
@@ -73,8 +74,17 @@
             require './notiWhats.php';
             echo '<script>console.log("Paso 5")</script>';
             $FechaPerfil = new FechaPerfil();
-            //$Noti = new NotiWhats();
-            $listR = $_POST["lista"];
+            if(empty($_POST['lista'])) {
+                echo "<script>
+                Swal.fire({
+                icon: 'error',
+                title: 'Lo sentimos...!',
+                text: 'Debe escoger una opción válida!',  
+                })
+                </script>";
+            } else {
+                $listR = $_POST["lista"];
+            }
             $cedula = ($_POST['ced']);
             $date = date("y-m-d");
             $ubicacion = $_POST['Ub'];
@@ -91,15 +101,15 @@
                 // produces output
                 // Address: 58 Brooklyn Ave, Brooklyn, NY 11216, USA
 
-            if(empty($_POST['ced']) || $listR == ""){
+            if(empty($_POST['ced']) || empty($_POST['lista'])){
                 echo "<script>
                 Swal.fire({
                 icon: 'error',
-                title: 'Oops...!',
+                title: 'Lo sentimos...!',
                 text: 'Debe completar el formulario!',  
                 })
                 </script>";
-
+                //header("Refresh:5");
             }else{
             //Inicio de consulta de usuario
             $sql = "SELECT * FROM usuarios where cedula = $cedula";
@@ -114,7 +124,7 @@
                     mysqli_free_result($result);
 
                     //Entrada
-                    if ($listR == "Ingreso") {
+                    if ($listR == "Entrada") {
                         $q = "SELECT COUNT(*) as contar from marcas where cedula = '$cedula' AND fecha = '$date' AND idTipoMarca = 1";
                         $consulta = mysqli_query($conexion, $q);
                         $array = mysqli_fetch_array($consulta);
@@ -226,7 +236,7 @@
                             echo "<script>
                             Swal.fire({
                             icon: 'success',
-                            title: 'Enhorabuena...!',
+                            title: 'Felicidades...!',
                             text: 'Hora de ingreso registrada..!',  
                             })
                             </script>";
@@ -234,10 +244,11 @@
                                 echo "<script>
                                     Swal.fire({
                                     icon: 'error',
-                                    title: 'Oops...!',
+                                    title: 'Lo sentimos $nombre...!',
                                     text: 'Ya ha registrado la hora de ingreso de hoy $date..!',  
                                     })
                                 </script>";
+                                header("Refresh:5");
                             }
                     //Salida
                     } else {
@@ -352,7 +363,7 @@
                                     echo "<script>
                                         Swal.fire({
                                         icon: 'success',
-                                        title: 'Enhorabuena...!',
+                                        title: 'Felicidades...!',
                                         text: 'Hora de salida registrada..!',  
                                         })
                                     </script>";
@@ -360,7 +371,7 @@
                                     echo "<script>
                                         Swal.fire({
                                         icon: 'error',
-                                        title: 'Oops...!',
+                                        title: 'Lo sentimos $nombre...!',
                                         text: 'Ya ha registrado su hora de salida de hoy $date..!',  
                                         })
                                     </script>";
@@ -368,7 +379,7 @@
 
                     //Salida a almuerzo
                     } else {
-                        if ($listR == "Salida a Almuerzo") {
+                        if ($listR == "Salida a descanso") {
                             $q = "SELECT COUNT(*) as contar from marcas where cedula = '$cedula' AND fecha = '$date' AND idTipoMarca = 2";
                             $consulta = mysqli_query($conexion, $q);
                             $array = mysqli_fetch_array($consulta);
@@ -479,7 +490,7 @@
                                 echo "<script>
                                 Swal.fire({
                                 icon: 'success',
-                                title: 'Enhorabuena...!',
+                                title: 'Felicidades...!',
                                 text: 'Hora de salida a almuerzo registrada..!',  
                                 })
                                 </script>";
@@ -487,14 +498,14 @@
                                     echo "<script>
                                     Swal.fire({
                                     icon: 'error',
-                                    title: 'Oops...!',
+                                    title: 'Lo sentimos $nombre...!',
                                     text: 'Ya ha registrado su hora de salida a almuerzo de hoy $date..!',  
                                     })
                                     </script>";
                                 }
                     //Entrada después de almuerzo
                     } else {
-                        if ($listR == "Entrada despues de Almuerzo") {
+                        if ($listR == "Entrada de descanso") {
                             $q = "SELECT COUNT(*) as contar from marcas where cedula = '$cedula' AND fecha = '$date' AND idTipoMarca = 3";
                             $consulta = mysqli_query($conexion, $q);
                             $array = mysqli_fetch_array($consulta);
@@ -605,7 +616,7 @@
                                     echo "<script>
                                         Swal.fire({
                                         icon: 'success',
-                                        title: 'Enhorabuena...!',
+                                        title: 'Felicidades...!',
                                         text: 'Hora de entrada del almuerzo registrada..!',  
                                         })
                                     </script>";
@@ -613,7 +624,7 @@
                                     echo "<script>
                                         Swal.fire({
                                         icon: 'error',
-                                        title: 'Oops...!',
+                                        title: 'Lo sentimos $nombre $nombre...!',
                                         text: 'Ya ha registrado su hora de entrada del almuerzo de hoy $date..!',  
                                         })
                                         </script>";
@@ -623,7 +634,7 @@
                             echo "<script>
                             Swal.fire({
                             icon: 'error',
-                            title: 'Oops...!',
+                            title: 'Lo sentimos $nombre...!',
                             text: 'Debe completar el formulario..!',  
                             })
                             </script>";    
@@ -636,10 +647,11 @@
         echo "<script>
             Swal.fire({
             icon: 'error',
-            title: 'Lo sentimos!',
-            text: 'La cédula ingresada no corresponde a ningún colaborador de Ecokhemia!',  
+            title: 'Lo sentimos $nombre!',
+            text: 'La cédula ingresada no corresponde a ningún colaborador de TicoWorks!',  
             })
             </script>";
+            header("Refresh:5");
             }
         } else{
             echo "ERROR: Could not able to execute $sql. " . mysqli_error($conexion);
