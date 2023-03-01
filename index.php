@@ -8,7 +8,7 @@ session_start();
         <meta charset="UFT-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"&amp;gt;>
         <title>Página Principal</title>
-        <link rel="stylesheet"  type="text/css" href="./css/EdicionAR.css">
+        <link rel="stylesheet"  type="text/css" href="./css/main.css">
         <link rel="stylesheet"  type="text/css" href="./icons/fonts.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css">
         <link rel="icon" href="">
