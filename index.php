@@ -8,8 +8,8 @@ session_start();
         <meta charset="UFT-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"&amp;gt;>
         <title>Página Principal</title>
-        <link rel="stylesheet"  type="text/css" href="./css/styles.css">
-        <link rel="stylesheet"  type="text/css" href="icons/fonts.css">
+        <link rel="stylesheet"  type="text/css" href="./css/EdicionAR.css">
+        <link rel="stylesheet"  type="text/css" href="./icons/fonts.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css">
         <link rel="icon" href="">
         <script src="https://maps.googleapis.com/maps/api/js?key-127.0.0.1&callback-initMap" async defer></script>
@@ -31,12 +31,12 @@ session_start();
 
         </form>
 
-        <form action="index.php" class="access-box" method="POST">
+        <form action="index.php" class="form-box" method="POST">
             <h3>Sistema de Asistencia Laboral</h3>
             <br>
             <h3>Te damos la bienvenida!</h3>
             <br>
-            <h3 class="access-title">Inicia Sesion y registra tu asistencia.</h3>
+            <h3 class="form-title">Inicia Sesion y registra tu asistencia.</h3>
             <input type="text" placeholder="Cedula" name="ced" id="ced" autofocus>
             <input type="password" placeholder="Contraseña" name="passc" id="passc">
             <div>
