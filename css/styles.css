@@ -14,7 +14,7 @@ body {
 /*Navegacion*/
 header {
     width: 100%;
-    background: #ffffff;
+    background: #000000;
     background-size: cover;
     background-attachment: fixed;
     position: relative;
@@ -44,7 +44,7 @@ header nav{
     width:100%;
     left: 0;
     height: 70px;
-    background: #ffffff;
+    background: #e6f5ff;
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -21,7 +21,6 @@
                 <ul class="lists">
                     <li><a href="frmHora.php"><span class="icon-user-check"></span>Registrar hora</a></li>
                     <li><a href="frmAcceder.php"><span class="icon-user-check"></span>Iniciar Sesión</a></li>
-                    <li><a href="frmRegistro.php"><span class="icon-user-plus"></span>Registrarse</a></li>
                     <li><a href="sysAdmin.php"><span class="icon-user-plus"></span>Administración</a></li>
                 </ul>
             </div>
@@ -33,13 +32,12 @@
             <br>
             <br>
             <br>
-            <br>
-            <br>
-            <H2>TicoWorks: Sistema de Asistencia Laboral</H2>
+            <p><img alt="" width="400" src="./image/logo1.png"></p> 
+            <H2>Sistema de Asistencia Laboral</H2>
             <br>
             <H2>Te damos la bienvenida!</H2>
             <br>
-            <H5>Crea una cuenta y/o Inicia Sesion y registra tu asistencia.</H5>
+            <H5>Inicia Sesion y registra tu asistencia.</H5>
             
 </form>
 </body>
