@@ -21,19 +21,19 @@ session_start();
     </header>
     
     <body>   
-            <img alt="" width="350" src="./image/logo1.png">
+            <img class="tw-logo" src="./image/logo1.png">
             <form action="index.php" class="form-box" method="POST">
             <h3 class="form-title">Sistema de Asistencia Laboral</h3>
             <h3 class="form-sub-title">Te damos la bienvenida!</h3>
             <h3 class="form-sub-title">Inicia Sesion y registra tu asistencia.</h3>
-            <input type="text" placeholder="Cedula" name="ced" id="ced" autofocus>
+            <input type="text" placeholder="Cedula" name="ced" id="ced">
             <input type="password" placeholder="Contraseña" name="passc" id="passc">
             <div>
                <!-- <input type="checkbox" name="00">
                 <p>¿Mantener sesion iniciada?</p>--> 
             </div>
 
-            <input type="submit" value="Acceder" name="btverificar" id="btverificar">
+            <input type="submit" value="Ingresar" name="btverificar" id="btverificar">
             <p><a class="volver" href="./cerrar.php">Cerrar Sesion</a></p>
             <?php
             //header("Refresh:0");
