@@ -12,6 +12,7 @@ session_start();
         <link rel="stylesheet"  type="text/css" href="icons/fonts.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css">
         <link rel="icon" href="">
+        <link rel="stylesheet" href="css/EdicionAR.css"> 
         <script src="https://maps.googleapis.com/maps/api/js?key-127.0.0.1&callback-initMap" async defer></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

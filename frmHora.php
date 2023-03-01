@@ -59,10 +59,10 @@ if(!isset($cedula)){
                             <!-- <input type="checkbox" name="00">
                             <p>¿Mantener sesion iniciada?</p>--> 
             <input type="submit" value="Registrar marca" name="btEnviar" id="btEnviar">
-            <input type="submit" value="Cerrar Sesión" name="btSalir" id="btSalir">
             <input type="hidden" id="Ub" name="Ub" readonly>
             <input type="hidden" id="latitud" name="latitud" readonly>
             <input type="hidden" id="longitud" name="longitud" readonly>
+            <input type="submit" value="Cerrar Sesión" name="btSalir" id="btSalir">
         </form>
     <?php
 
