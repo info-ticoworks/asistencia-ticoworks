@@ -1,3 +1,13 @@
+<?php
+session_start();
+include './config.php';
+$cedula = $_SESSION['cedula'];
+if(!isset($cedula)){
+    // header ("Location: rediriges a la pagina de logueo".)
+    header("Location: ./index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>

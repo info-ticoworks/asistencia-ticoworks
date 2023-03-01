@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,36 +13,87 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css">
         <link rel="icon" href="">
         <script src="https://maps.googleapis.com/maps/api/js?key-127.0.0.1&callback-initMap" async defer></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     </head>
     <header id="header">
-        <nav class="menu">
-            <div class="logo-box">
-            </div>
-            <div class="logo-box">
-                <span class="btn-menu"><i class="fas fa-bars"></i></span>
-            </div>
-            <div class="list-container">        
-                <ul class="lists">
-                    <li><a href="frmHora.php"><span class="icon-user-check"></span>Registrar hora</a></li>
-                    <li><a href="frmAcceder.php"><span class="icon-user-check"></span>Iniciar Sesión</a></li>
-                    <li><a href="sysAdmin.php"><span class="icon-user-plus"></span>Administración</a></li>
-                </ul>
-            </div>
-        </nav>
         <script src="js/funcion.js"></script>
     </header>
+    
     <body>
+        <Script>
+            //header("Refresh:0");
+        </Script>
+   
         <form class="form-box" action="index.php" method="POST">
             <br>
+            <p><img alt="" width="350" src="./image/logo1.png"></p> 
+
+        </form>
+
+        <form action="index.php" class="access-box" method="POST">
+            <h3>Sistema de Asistencia Laboral</h3>
             <br>
+            <h3>Te damos la bienvenida!</h3>
             <br>
-            <p><img alt="" width="400" src="./image/logo1.png"></p> 
-            <H2>Sistema de Asistencia Laboral</H2>
-            <br>
-            <H2>Te damos la bienvenida!</H2>
-            <br>
-            <H5>Inicia Sesion y registra tu asistencia.</H5>
-            
-</form>
-</body>
+            <h3 class="access-title">Inicia Sesion y registra tu asistencia.</h3>
+            <input type="text" placeholder="Cedula" name="ced" id="ced" autofocus>
+            <input type="password" placeholder="Contraseña" name="passc" id="passc">
+            <div>
+               <!-- <input type="checkbox" name="00">
+                <p>¿Mantener sesion iniciada?</p>--> 
+            </div>
+
+            <input type="submit" value="Acceder" name="btverificar" id="btverificar">
+            <p><a class="volver" href="./cerrar.php">Cerrar Sesion</a></p>
+            <?php
+            //header("Refresh:0");
+            if (isset($_POST['btverificar'])) {
+                require './config.php';
+                $cedula = $_POST['ced'];
+                $pass = $_POST['passc'];
+                $q = "SELECT * FROM usuarios where cedula = '$cedula' AND pass = '$pass'";
+                $consulta = mysqli_query($conexion, $q);
+                //$array = mysqli_fetch_array($consulta);
+                if(mysqli_num_rows($consulta) == 1) {
+                    $row = mysqli_fetch_array($consulta);
+                    $idTipoUsuario = $row ['idTipoUsuario'];
+                    $ced = $row ['cedula'];
+                    $_SESSION['cedula'] = $row ['cedula'];
+                    if($idTipoUsuario == "1" || $idTipoUsuario == "2" || $idTipoUsuario == "3"){
+                        header("Location: frmHora.php");
+                    }else if($idTipoUsuario == "4"){
+                        header("Location: frmAdmin.php");
+                    }else{
+                        echo "<script>
+                        Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...!',
+                        text: 'Acceso no autorizado al sistema..!',  
+                        })
+                        </script>";
+                    }
+                } else {
+                    if(empty($_POST['ced']) || empty($_POST['passc'])){
+                        echo "<script>
+                        Swal.fire({
+                        icon: 'warning',
+                        title: 'Lo sentimos...!',
+                        text: 'Debe digitar todos los Datos.',  
+                        })
+                        </script>";
+                    }else{
+                        echo "<script>
+                        Swal.fire({
+                        icon: 'error',
+                        title: 'Lo sentimos...!',
+                        text: 'Datos incorrectos.',  
+                        })
+                        </script>";
+                    }
+                  }
+                }
+            ?>
+        </form>
+    </body>
 </html>

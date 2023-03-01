@@ -17,5 +17,4 @@ try {
   log_exception($e);
   echo '<script>console.log("Errorcito")</script>';
 }
-
 ?>

@@ -9,6 +9,9 @@ body {
     font-size: 30px;
     background-attachment: fixed;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /*Navegacion*/
@@ -81,6 +84,103 @@ li{
     display: none;
 }
 
+.access-box .Ub{
+    visibility: hidden;
+}
+p{
+    font: 15px Arial, Helvetica, sans-serif;
+    color: #fff;
+}
+
+.access-box {
+    width: 400px;
+    padding: 28px;
+    background: #191919;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.access-box .label{
+    color: #ffffff;  
+}
+
+.access-title {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.access-box label {
+    color: #fff;
+}
+.access-box select {
+    border: 0;
+    background-color: #191919;
+    color: #ffffff;
+    display: block;
+    margin: 18px auto;
+    text-align: center;
+    border: 2px solid #345fee;
+    padding: 14px 20px;
+    width: 220px;
+    outline: none;
+    border-radius: 10px;
+    transition: 0.23s;
+}
+
+.access-box label{
+    color: #ffffff;
+}
+
+.access-box input[type="text"], .access-box input[type="password"], .access-box input[type="submit"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 18px auto;
+    text-align: center;
+    border: 2px solid #345fee;
+    padding: 14px 20px;
+    width: 220px;
+    outline: none;
+    color: white;
+    border-radius: 10px;
+    transition: 0.23s;
+
+}
+
+.access-box input[type="text"]:focus, .access-box input[type="password"]:focus {
+    width: 300px;
+    border-color: #ffffff;
+}
+
+.access-box button[type="submit"] {
+    border: 0;
+    background: #345fee;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #1922bd;
+    padding: 16px 20px;
+    outline: none;
+    color: white;
+    border-radius: 25px;
+    transition: 0.23s;
+    cursor: pointer;
+}
+
+.access-box button[type="submit"]:hover {
+    background: none;
+}
+
+.volver {
+    color: #33ffff;
+}
+
+.volver:hover, a:focus {
+    color: #5c7575;
+    animation-delay: 500ms;
+}
+
 @media only screen and (max-width:980px){
     
     .btn-menu > .fa-bars{
@@ -134,4 +234,5 @@ li{
 .form-box{
       margin: auto;
       text-align:center;
-    }
+}
+
