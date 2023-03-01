@@ -20,23 +20,12 @@ session_start();
         <script src="js/funcion.js"></script>
     </header>
     
-    <body>
-        <Script>
-            //header("Refresh:0");
-        </Script>
-   
-        <form class="" action="index.php" method="POST">
-            <br>
-            <p><img alt="" width="350" src="./image/logo1.png"></p> 
-
-        </form>
-
-        <form action="index.php" class="form-box" method="POST">
-            <h3>Sistema de Asistencia Laboral</h3>
-            <br>
-            <h3>Te damos la bienvenida!</h3>
-            <br>
-            <h3 class="form-title">Inicia Sesion y registra tu asistencia.</h3>
+    <body>   
+            <img alt="" width="350" src="./image/logo1.png">
+            <form action="index.php" class="form-box" method="POST">
+            <h3 class="form-title">Sistema de Asistencia Laboral</h3>
+            <h3 class="form-sub-title">Te damos la bienvenida!</h3>
+            <h3 class="form-sub-title">Inicia Sesion y registra tu asistencia.</h3>
             <input type="text" placeholder="Cedula" name="ced" id="ced" autofocus>
             <input type="password" placeholder="Contraseña" name="passc" id="passc">
             <div>

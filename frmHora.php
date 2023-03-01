@@ -44,7 +44,7 @@ if(!isset($cedula)){
            }
         </script>
 
-        <form action="frmHora.php" class="access-box" method="POST"> 
+        <form action="frmHora.php" class="form-box" method="POST"> 
             <p><img alt="" width="280" height="216" src="./image/logo1.png"></p> 
                 <h3 class="form-title">Registrar hora</h3>
                 <h3 class="form-title">Hola <?php echo $nombre?> <?php echo $apellido1?> </h3>
