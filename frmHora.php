@@ -49,12 +49,17 @@ if(!isset($cedula)){
             <h3 class="form-title">Registrar hora</h3>
 
 
-                <select id="lista" name="lista">
+                <select class="select" id="lista" name="lista">
                     <option selected disabled>Horario a establecer</option>
+                    <br>
                     <option name="Entrada">Entrada</option>
+                    <br>
                     <option name="Salida a descanso">Salida a descanso</option>
+                    <br>
                     <option name="Entrada de descanso">Entrada de descanso</option>
+                    <br>
                     <option name="Salida">Salida</option>
+                    <br>
                 </select>
                             <!-- <input type="checkbox" name="00">
                             <p>¿Mantener sesion iniciada?</p>--> 

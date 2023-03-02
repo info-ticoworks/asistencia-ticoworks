@@ -6,8 +6,7 @@ $obj= new conectar();
 $conexion=$obj->conexion();
 
 $sql="SELECT id,
-horaIngreso,
-horaSalida,
+hora,
 cedula
 from marcas";
 $result=mysqli_query($conexion,$sql);
