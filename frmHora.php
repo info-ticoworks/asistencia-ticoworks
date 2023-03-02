@@ -11,7 +11,7 @@ $wsNotif = $_SESSION['wsNotif'];
 if(!isset($cedula)){
     // header ("Location: rediriges a la pagina de logueo".)
     header("Location: ./index.php");
-}
+    }
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +28,6 @@ if(!isset($cedula)){
     <body>
 
         <script type="text/javascript">
-            header("Refresh:0");
            if (typeof navigator.geolocation == 'object'){
                navigator.geolocation.getCurrentPosition(mostrar_ubicacion);
            }
@@ -46,8 +45,9 @@ if(!isset($cedula)){
 
         <form action="frmHora.php" class="form-box" method="POST"> 
             <p><img alt="" width="280" height="216" src="./image/logo1.png"></p> 
-                <h3 class="form-title">Registrar hora</h3>
-                <h3 class="form-title">Hola <?php echo $nombre?> <?php echo $apellido1?> </h3>
+            <h3 class="form-title">Hola <?php echo $nombre?> <?php echo $apellido1?> </h3>
+            <h3 class="form-title">Registrar hora</h3>
+
 
                 <select id="lista" name="lista">
                     <option selected disabled>Horario a establecer</option>

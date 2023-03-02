@@ -26,7 +26,7 @@ session_start();
             <h3 class="form-title">Sistema de Asistencia Laboral</h3>
             <h3 class="form-sub-title">Te damos la bienvenida!</h3>
             <h3 class="form-sub-title">Inicia Sesion y registra tu asistencia.</h3>
-            <input type="text" placeholder="Cedula" name="ced" id="ced">
+            <input type="text" placeholder="Cedula" name="ced" id="ced" autofocus>
             <input type="password" placeholder="Contraseña" name="passc" id="passc">
             <div>
                <!-- <input type="checkbox" name="00">
@@ -41,11 +41,26 @@ session_start();
                 require './config.php';
                 $cedula = $_POST['ced'];
                 $pass = $_POST['passc'];
-                $q = "SELECT * FROM usuarios where cedula = '$cedula' AND pass = '$pass'";
+                //$q = "SELECT * FROM usuarios where cedula = '$cedula'";
+                //$consulta1 = mysqli_query($conexion, $q);
+                //if(mysqli_num_rows($consulta1) == 1) {
+                    //$row = mysqli_fetch_array($consulta1);
+                    //$hashed_pass = $row ['pass'];
+                    //$verify = password_verify($pass, $hashed_pass);
+
+                    //if($verify){
+                        //echo 'Password Verified!';
+                    //}else{
+                        //echo 'Incorrect Password!';
+                    //}
+                //}
+
+                $q = "SELECT * FROM usuarios where cedula = '$cedula'";
                 $consulta = mysqli_query($conexion, $q);
                 //$array = mysqli_fetch_array($consulta);
                 if(mysqli_num_rows($consulta) == 1) {
                     $row = mysqli_fetch_array($consulta);
+                    $hashed_pass = $row ['pass'];
                     $idTipoUsuario = $row ['idTipoUsuario'];
                     $ced = $row ['cedula'];
                     $_SESSION['cedula'] = $row ['cedula'];
@@ -55,19 +70,36 @@ session_start();
                     $_SESSION['correo'] = $row ['correo'];
                     $_SESSION['idTipoUsuario'] = $row ['idTipoUsuario'];
                     $_SESSION['wsNotif'] = $row ['wsNotif'];
-                    if($idTipoUsuario == "1" || $idTipoUsuario == "2" || $idTipoUsuario == "3"){
-                        header("Location: frmHora.php");
-                    }else if($idTipoUsuario == "4"){
-                        header("Location: frmAdmin.php");
+                    $verify = password_verify($pass, $hashed_pass);
+                    if($verify){
+                        if($idTipoUsuario == "1" || $idTipoUsuario == "2" || $idTipoUsuario == "3"){
+                            header("Location: frmHora.php");
+                        }else if($idTipoUsuario == "4"){
+                            header("Location: frmAdmin.php");
+                        }else{
+                            echo "<script>
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...!',
+                            text: 'Acceso no autorizado al sistema..!',  
+                            })
+                            </script>";
+                        }
+                        //echo 'Password Verified!';
                     }else{
                         echo "<script>
                         Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...!',
-                        text: 'Acceso no autorizado al sistema..!',  
+                        icon: 'warning',
+                        title: 'Lo sentimos...!',
+                        text: 'La contraseña es incorrecta.',  
                         })
                         </script>";
+                        //echo 'Incorrect Password!';
                     }
+
+
+
+
                 } else {
                     if(empty($_POST['ced']) || empty($_POST['passc'])){
                         echo "<script>
