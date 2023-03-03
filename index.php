@@ -23,7 +23,6 @@ session_start();
     <body>   
             <img class="tw-logo" src="./image/logo1.png">
             <form action="index.php" class="form-box" method="POST">
-            <h3 class="form-title">Sistema de Asistencia Laboral</h3>
             <h3 class="form-sub-title">Te damos la bienvenida!</h3>
             <h3 class="form-sub-title">Inicia Sesion y registra tu asistencia.</h3>
             <input type="text" placeholder="Cedula" name="ced" id="ced" autofocus>

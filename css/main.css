@@ -103,11 +103,12 @@ p{
 
 .form-box {
     width: 400px;
-    background: #073f3f;
+    
+    background: linear-gradient(#008584,#025b97);
     text-align: center;
-    border-radius: 15px;
+    border-radius: 20px;
     padding: 30px 0;
-    border: solid 3px rgb(255, 255, 255);
+    border: solid 10px #69bcbd;
 }
 
 .form-box .label{
@@ -150,7 +151,7 @@ p{
 
 .form-box input[type="text"], .form-box input[type="password"] {
     border: 0;
-    background: #deefef;
+    background: #cdcdcd;
     display: block;
     margin: 18px auto;
     text-align: center;
