@@ -267,13 +267,17 @@ p{
 
 
 @media (max-width:500px){
+    body, html {
+        margin: 20px 0;
+    }
+
+
     .tw-logo {
         width: 80%;
-        padding-top: 60px;
     }
 
     .form-box {
-        width: 95%;
+        width: 85%;
         height: 85%;
         padding: 10px 0;
     }
