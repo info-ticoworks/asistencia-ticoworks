@@ -268,7 +268,8 @@ p{
 
 @media (max-width:500px){
     body, html {
-        margin: 20px 0;
+        margin-top: 20px;
+        margin-bottom: 30px;
     }
 
 
