@@ -40,17 +40,20 @@ if(!isset($cedula)){
                     document.getElementById("Ub").value = posicion;
                     document.getElementById("latitud").value = latitud;
                     document.getElementById("longitud").value = longitud;
-                    const locations = {
-                                        current: { lat: latitud, lng: longitud }
-                                    }
-                    var mapProp= {
-                        center:new google.maps.LatLng(latitud,longitud),
-                        zoom:18,
-                        position: locations[location],
-                        icon: './image/custom_pin.png'
-                    };
+                    var map;
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        center: {lat: latitud, lng: longitud},
+                        zoom: 16
+                    });
+                        var marker = new google.maps.Marker({
+                        position: {lat: latitud, lng: longitud},
+                        map: map,
+	                    title: 'Su ubicación actual...'
+                    });
+
                     var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
                 }
+                setInterval ('mostrar_ubicacion(p)', 5000);
         </script>
 
         <img class="tw-logo" src="./image/logo1.png">  
@@ -84,8 +87,8 @@ if(!isset($cedula)){
             <input type="submit" value="Cerrar Sesión" name="btSalir" id="btSalir">
             <br>
             <br>
-            <h1 class="form-sub-title">Tu ubicación actual...</h1>
-            <div class="map" id="googleMap"></div>
+            <h1 class="form-sub-title">Su ubicación actual...</h1>
+            <div class="map" id="map"></div>
         </form>
 
     <?php
@@ -710,6 +713,8 @@ if(!isset($cedula)){
     }
 
 ?>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeDOXOfjA9lzL2y-e4FXa4uadc_Tksfxc&callback=myMap"></script>
+<script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeDOXOfjA9lzL2y-e4FXa4uadc_Tksfxc&callback=initMap">
+    </script>
 </body>
 </html>
