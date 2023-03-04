@@ -32,21 +32,35 @@ if(!isset($cedula)){
                navigator.geolocation.getCurrentPosition(mostrar_ubicacion);
            }
 
-           function mostrar_ubicacion(p)
-           {
-               var posicion = p.coords.latitude+','+p.coords.longitude;
-               var latitud = p.coords.latitude;
-               var longitud = p.coords.longitude;
-               document.getElementById("Ub").value = posicion;
-               document.getElementById("latitud").value = latitud;
-               document.getElementById("longitud").value = longitud;
-           }
+            function mostrar_ubicacion(p)
+                {
+                    var posicion = p.coords.latitude+','+p.coords.longitude;
+                    var latitud = p.coords.latitude;
+                    var longitud = p.coords.longitude;
+                    document.getElementById("Ub").value = posicion;
+                    document.getElementById("latitud").value = latitud;
+                    document.getElementById("longitud").value = longitud;
+                    const locations = {
+                                        current: { lat: latitud, lng: longitud }
+                                    }
+                    var mapProp= {
+                        center:new google.maps.LatLng(latitud,longitud),
+                        zoom:18,
+                        position: locations[location],
+                        icon: './image/custom_pin.png'
+                    };
+                    var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+                }
         </script>
 
-        <form action="frmHora.php" class="form-box" method="POST"> 
-            <p><img alt="" width="280" height="216" src="./image/logo1.png"></p> 
-            <h3 class="form-title">Hola <?php echo $nombre?> <?php echo $apellido1?> </h3>
-            <h3 class="form-title">Registrar hora</h3>
+        <img class="tw-logo" src="./image/logo1.png">  
+        <form action="frmHora.php" class="form-box" method="POST">
+            <h3 class="form-sub-title">Hola <?php echo $nombre?> <?php echo $apellido1?> </h3>
+            <h3 class="form-sub-title">Registrar hora</h3>
+
+            <?php
+
+        ?>
 
 
                 <select class="select" id="lista" name="lista">
@@ -68,25 +82,31 @@ if(!isset($cedula)){
             <input type="hidden" id="latitud" name="latitud" readonly>
             <input type="hidden" id="longitud" name="longitud" readonly>
             <input type="submit" value="Cerrar Sesión" name="btSalir" id="btSalir">
+            <br>
+            <br>
+            <h1 class="form-sub-title">Tu ubicación actual...</h1>
+            <div class="map" id="googleMap"></div>
         </form>
+
     <?php
 
     function getAddress($latitude, $longitude)
-    {
-        try {
-                //google map api url
-                $url = "https://maps.google.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=AIzaSyBv0et_lBK9kxP1DCwAnmdfP8YH-j32JkU";
+        {
+            try {
+                    //google map api url
+                    $url = "https://maps.google.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=AIzaSyBeDOXOfjA9lzL2y-e4FXa4uadc_Tksfxc";
 
-                // send http request
-                $geocode = file_get_contents($url);
-                $json = json_decode($geocode);
-                $address = $json->results[0]->formatted_address;
-                return $address;
-            } catch (Exception $e) {
-                log_exception($e);
-                echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+                    // send http request
+                    $geocode = file_get_contents($url);
+                    $json = json_decode($geocode);
+                    $address = $json->results[0]->formatted_address;
+                    return $address;
+                } catch (Exception $e) {
+                    log_exception($e);
+                    echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+            }
         }
-    }
+
     try {
         if (isset($_POST['btEnviar'])) {
             require './config.php';
@@ -690,5 +710,6 @@ if(!isset($cedula)){
     }
 
 ?>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeDOXOfjA9lzL2y-e4FXa4uadc_Tksfxc&callback=myMap"></script>
 </body>
 </html>
