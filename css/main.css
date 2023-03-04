@@ -4,14 +4,15 @@
 }
 
 html {
-
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#000000,#0072c6);
+    background-attachment: fixed;
 }
 
 body {
     width: 100%;
-    height: auto;
-    background: linear-gradient(#000000,#0072c6);
-    background-attachment: fixed;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -222,6 +223,7 @@ p{
     height: 200px;
     z-index: 1;
     border-radius: 10px;
+
 }
 
 @media (max-width:980px){
@@ -276,11 +278,13 @@ p{
 
 
 @media (max-width:500px){
-    body, html {
-        margin-top: 20px;
-        margin-bottom: 30px;
+    html {
+        padding: 20px 0;
     }
 
+    body {
+        height: auto;
+    }
 
     .tw-logo {
         width: 80%;
@@ -288,7 +292,8 @@ p{
 
     .form-box {
         width: 85%;
-        height: 85%;
+        height: auto;
+        margin-bottom: 50px;
     }
 
     .form-box input[type="text"]:focus, .form-box input[type="password"]:focus {

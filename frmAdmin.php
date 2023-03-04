@@ -42,18 +42,17 @@ if($idTipoUsuario<>4){
             <div class="list-container">        
                 <ul class="lists">
                     <li><a href="frmHora.php"><span class="icon-user-check"></span>Registrar hora</a></li>
-                    <li><a href="frmAcceder.php"><span class="icon-user-check"></span>Iniciar Sesión</a></li>
-                    <li><a href="frmRegistro.php"><span class="icon-user-plus"></span>Registrarse</a></li>
-                    <li><a href="sysAdmin.php"><span class="icon-user-plus"></span>Administración</a></li>
+                    <li><a href="frmRegistro.php"><span class="icon-user-plus"></span>Registrar Usuario</a></li>
+                    <li><a href="cerrar.php"><span class="icon-user-plus"></span>Cerrar Sesión</a></li>
                 </ul>
             </div>
         </nav>
-        <script src="js/funcion.js"></script>
     </header>
 
 
 
     <body>
 
+    <script src="js/funcion.js"></script>
     </body>
 </html>

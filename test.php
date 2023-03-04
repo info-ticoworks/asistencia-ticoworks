@@ -28,8 +28,6 @@ if(!isset($cedula)){
     <body>
 
         <script type="text/javascript">
-            latitud = '';
-            longitud = '';
 
            if (typeof navigator.geolocation == 'object'){
                navigator.geolocation.getCurrentPosition(mostrar_ubicacion);
@@ -41,7 +39,10 @@ if(!isset($cedula)){
                 document.getElementById("Ub").value = latitud;
                 document.getElementById("latitud").value = latitud;
                 document.getElementById("longitud").value = longitud;
+
             }
+
+            window.setTimeout(initMap,1000);
 
             function initMap() {
                 // Current Location
@@ -57,10 +58,6 @@ if(!isset($cedula)){
                     map: map,
                 });
             }
-            window.initMap = initMap
-            window.setTimeout(initMap,2000);
-            //setInterval ('mostrar_ubicacion()', 4000);
-            setInterval ('initMap()', 20000);
             
         </script>
 
@@ -81,16 +78,23 @@ if(!isset($cedula)){
             <option name="Salida">Salida</option>
             <br>
         </select>
+                            <!-- <input type="checkbox" name="00">
+                            <p>¿Mantener sesion iniciada?</p>--> 
             <input type="submit" value="Registrar marca" name="btEnviar" id="btEnviar">
             <input type="hidden" id="Ub" name="Ub" readonly>
             <input type="hidden" id="latitud" name="latitud" readonly>
             <input type="hidden" id="longitud" name="longitud" readonly>
             <input type="submit" value="Cerrar Sesión" name="btSalir" id="btSalir">
             <br>
+            <br>
             <h1 class="form-sub-title">Su ubicación actual...</h1>
             <div class="map" id="map"></div>
         </form>
+
     <?php
+
+
+
     try {
         if (isset($_POST['btEnviar'])) {
             require './config.php';
