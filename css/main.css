@@ -3,36 +3,40 @@
     padding:0;
 }
 
-html {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(#000000,#0072c6);
-    background-attachment: fixed;
-}
-
 body {
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
+    margin: 0;
+    position: relative;
+    background: linear-gradient(#000000,#0072c6);
+    background-attachment: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin: 20px 0px;
+    justify-content: flex-start;
 }
+
+body::after {
+    content: '';
+    display: block;
+    height: 50px; /* Set same as footer's height */
+  }
 
 .tw-logo {
     width: 300px;
+    margin-top: 30px;
 }
 
 /*Navegacion*/
 header {
     width: 100%;
-    background: #000000;
+    background: none;
     background-size: cover;
     background-attachment: fixed;
     position: relative;
-    padding-top: 2px;
+    border-top: solid 2px black;
 }
+
 .menu .logo_img{
     width: 10%;
     margin-left: 13px;
@@ -56,13 +60,12 @@ header nav{
 .menu{
     width:100%;
     left: 0;
-    height: 70px;
-    background: #e6f5ff;
+    height: 60px;
+    background: #69bcbd;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 9999;
-    border-bottom: solid 3px #023b4d;
 }
 li{
     color: #000000;   
@@ -112,6 +115,7 @@ p{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 50px;
 }
 
 .form-box .label{
@@ -223,7 +227,25 @@ p{
     height: 200px;
     z-index: 1;
     border-radius: 10px;
+}
 
+footer {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    color: white;
+    font-size: 15px;
+    background-color: #000000;
+    opacity: .6;
+    position:absolute;
+    bottom: 0;
+}
+
+.footer-padding {
+    width: 25px;
 }
 
 @media (max-width:980px){
@@ -276,15 +298,7 @@ p{
     }
 }
 
-
 @media (max-width:500px){
-    html {
-        padding: 20px 0;
-    }
-
-    body {
-        height: auto;
-    }
 
     .tw-logo {
         width: 80%;
@@ -293,7 +307,6 @@ p{
     .form-box {
         width: 85%;
         height: auto;
-        margin-bottom: 50px;
     }
 
     .form-box input[type="text"]:focus, .form-box input[type="password"]:focus {
@@ -301,7 +314,6 @@ p{
     }
     
 }
-
 
 
 

@@ -6,24 +6,21 @@ session_start();
 <html lang="en">
     <head>
         <meta charset="UFT-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"&amp;gt;>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Página Principal</title>
-        <link rel="stylesheet"  type="text/css" href="./css/main.css">
-        <link rel="stylesheet"  type="text/css" href="./icons/fonts.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css">
-        <link rel="icon" href="">
+        <link rel="stylesheet" href="./css/main.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     </head>
-    
     <body>   
-            <img class="tw-logo" src="./image/logo1.png">
-            <form action="index.php" class="form-box" method="POST">
-            <h3 class="form-sub-title">Te damos la bienvenida!</h3>
-            <h3 class="form-sub-title">Inicia Sesion y registra tu asistencia.</h3>
-            <input type="text" placeholder="Cédula" name="ced" id="ced" autofocus>
-            <input type="password" placeholder="Contraseña" name="passc" id="passc">
-            <input type="submit" value="Ingresar" name="btverificar" id="btverificar">
+        <img class="tw-logo" src="./image/logo1.png">
+        <form action="index.php" class="form-box" method="POST">
+        <h3 class="form-sub-title">Te damos la bienvenida!</h3>
+        <h3 class="form-sub-title">Inicia Sesion y registra tu asistencia.</h3>
+        <input type="text" placeholder="Cédula" name="ced" id="ced" autofocus>
+        <input type="password" placeholder="Contraseña" name="passc" id="passc">
+        <input type="submit" value="Ingresar" name="btverificar" id="btverificar">
             <?php
             //header("Refresh:0");
             if (isset($_POST['btverificar'])) {
@@ -49,7 +46,7 @@ session_start();
                     if($verify){
                         if($idTipoUsuario == "1" || $idTipoUsuario == "2" || $idTipoUsuario == "3"){
                             header("Location: frmHora.php");
-                        }else if($idTipoUsuario == "4"){
+                        }else if($idTipoUsuario == "5"){
                             header("Location: frmAdmin.php");
                         }else{
                             echo "<script>
@@ -94,4 +91,13 @@ session_start();
             ?>
         </form>
     </body>
+    <footer>
+        <div class="footer">
+            Developed by: Ticoworks. 2016-2023
+        </div>
+        <div class="footer-padding"></div>
+    </footer>
+
+
+
 </html>

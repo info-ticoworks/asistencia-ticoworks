@@ -1,5 +1,17 @@
 <?php
 session_start();
+include './config.php';
+$cedula = $_SESSION['cedula'];
+$nombre = $_SESSION['nombre'];
+$apellido1 = $_SESSION['apellido1'];
+$telefono = $_SESSION['telefono'];
+$correo = $_SESSION['correo'];
+$idTipoUsuario = $_SESSION['idTipoUsuario'];
+$wsNotif = $_SESSION['wsNotif'];
+if(!isset($cedula)){
+    // header ("Location: rediriges a la pagina de logueo".)
+    header("Location: ./index.php");
+    }
 ?>
 
 <!DOCTYPE html>

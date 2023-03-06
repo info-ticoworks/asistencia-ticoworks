@@ -8,7 +8,7 @@ session_start();
         <meta charset="UTF-8">
         <title>Ecokhemia</title> 
         <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0">
-        <link rel="stylesheet" href="css/EdicionAR.css"> 
+        <link rel="stylesheet" href="css/main.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     </head>  
@@ -80,4 +80,10 @@ session_start();
             ?>
         </form>
     </body>
+    <footer>
+        <div class="footer">
+            Developed by: Ticoworks. 2016-2023
+        </div>
+        <div class="footer-padding"></div>
+    </footer>
 </html>
