@@ -9,6 +9,7 @@ session_start();
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Página Principal</title>
+        <link rel="icon" type="image/x-icon" href="./image/favicon.ico">
         <link rel="stylesheet" href="./css/main.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -27,7 +28,9 @@ session_start();
                 require './config.php';
                 $cedula = $_POST['ced'];
                 $pass = $_POST['passc'];
-                $q = "SELECT * FROM usuarios where cedula = '$cedula'";
+                $q = "SELECT * FROM usuarios
+                    inner join empresa on usuarios.idEmpresa=empresa.idempresa
+                    where cedula = '$cedula'";
                 $consulta = mysqli_query($conexion, $q);
                 //$array = mysqli_fetch_array($consulta);
                 if(mysqli_num_rows($consulta) == 1) {
@@ -41,7 +44,10 @@ session_start();
                     $_SESSION['telefono'] = $row ['telefono'];
                     $_SESSION['correo'] = $row ['correo'];
                     $_SESSION['idTipoUsuario'] = $row ['idTipoUsuario'];
+                    $_SESSION['mailNotif'] = $row ['mailNotif'];
                     $_SESSION['wsNotif'] = $row ['wsNotif'];
+                    $_SESSION['idEmpresa'] = $row ['idEmpresa'];
+                    $_SESSION['nombreEmpresa'] = $row ['nombreEmpresa'];
                     $verify = password_verify($pass, $hashed_pass);
                     if($verify){
                         if($idTipoUsuario == "1" || $idTipoUsuario == "2" || $idTipoUsuario == "3"){

@@ -7,7 +7,18 @@ $apellido1 = $_SESSION['apellido1'];
 $telefono = $_SESSION['telefono'];
 $correo = $_SESSION['correo'];
 $idTipoUsuario = $_SESSION['idTipoUsuario'];
+$mailNotif = $_SESSION['mailNotif'];
 $wsNotif = $_SESSION['wsNotif'];
+$idEmpresa = $_SESSION['idEmpresa'];
+$nombreEmpresa = $_SESSION['nombreEmpresa'];
+date_default_timezone_set('America/Costa_Rica');
+$bMeses = array("void","Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+$bDias = array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
+$fecha = getdate();
+$dias = $bDias[$fecha["wday"]];
+$meses = $bMeses[$fecha["mon"]];
+$fechaActual = "$dias ".$fecha["mday"]." de ".$meses." de ".$fecha["year"]."";
+$horaActual = "".$fecha["hours"].":".$fecha["minutes"].":".$fecha["seconds"]."";
 if($idTipoUsuario<>5){
     // header ("Location: rediriges a la pagina de logueo".)
     header("Location: ./index.php");
@@ -19,12 +30,14 @@ if($idTipoUsuario<>5){
 <html>
     <head>
         <meta charset="UFT-8">
-            <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"&amp;gt;>
-            <title>Administración</title>
-            <link rel="stylesheet"  type="text/css" href="css/main.css">
-            <link rel="stylesheet"  type="text/css" href="icons/fonts.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css">
-            <link rel="icon" href="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Registrar hora</title>
+        <link rel="icon" type="image/x-icon" href="./image/favicon.ico">
+        <link rel="stylesheet" href="./css/main.css">
+        <link rel="stylesheet" href="./icons/fonts.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     </head>
 
     <header id="header">
@@ -36,7 +49,7 @@ if($idTipoUsuario<>5){
             </div>
             <div class="list-container">        
                 <ul class="lists">
-                    <li><a href="frmRegistro.php"><span class="icon-user-plus"></span>Registrar Usuario</a></li>
+                    <li><a href="frmRegistro.php"><span class="icon-user-plus"></span>Registrar nuevo usuario</a></li>
                     <li><a href="cerrar.php"><span class="icon-user-plus"></span>Cerrar Sesión</a></li>
                 </ul>
             </div>
@@ -83,9 +96,10 @@ if($idTipoUsuario<>5){
         </script>
 
         <img class="tw-logo" src="./image/logo1.png">  
-        <form action="frmHora.php" class="form-box" method="POST">
+        <form action="frmAdmin.php" class="form-box" method="POST">
         <h3 class="form-sub-title">Hola <?php echo $nombre?> <?php echo $apellido1?> </h3>
-        <h3 class="form-sub-title">Registrar hora</h3>
+        <h3 class="form-sub-title">Empresa: <?php echo $nombreEmpresa?></h3>
+        <h3 class="form-sub-title">Fecha: <?php echo $fechaActual?> </h3>
 
         <select class="select" id="lista" name="lista">
             <option selected disabled>Horario a establecer</option>
@@ -164,7 +178,7 @@ if($idTipoUsuario<>5){
                                 //require './notiWhats.php';
                                 if(empty($_POST['Ub']) || $listR == ""){
                                     //Notificaciones sin Ubicación
-                                    $sql = "SELECT * FROM usuarios where wsNotif = 1";
+                                    $sql = "SELECT * FROM usuarios where wsNotif = 1 AND idEmpresa = $idEmpresa";
                                     if($result = mysqli_query($conexion, $sql)){
                                         if(mysqli_num_rows($result) > 0){
                                             while($row = mysqli_fetch_array($result)){
@@ -210,7 +224,7 @@ if($idTipoUsuario<>5){
                                     }
                                 }else{
                                     //Notificaciones con Ubicación
-                                    $sql = "SELECT * FROM usuarios where wsNotif = 1";
+                                    $sql = "SELECT * FROM usuarios where wsNotif = 1 AND idEmpresa = $idEmpresa";
                                     if($result = mysqli_query($conexion, $sql)){
                                         if(mysqli_num_rows($result) > 0){
                                             while($row = mysqli_fetch_array($result)){

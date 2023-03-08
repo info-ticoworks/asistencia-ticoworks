@@ -7,7 +7,18 @@ $apellido1 = $_SESSION['apellido1'];
 $telefono = $_SESSION['telefono'];
 $correo = $_SESSION['correo'];
 $idTipoUsuario = $_SESSION['idTipoUsuario'];
+$mailNotif = $_SESSION['mailNotif'];
 $wsNotif = $_SESSION['wsNotif'];
+$idEmpresa = $_SESSION['idEmpresa'];
+$nombreEmpresa = $_SESSION['nombreEmpresa'];
+date_default_timezone_set('America/Costa_Rica');
+$bMeses = array("void","Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+$bDias = array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
+$fecha = getdate();
+$dias = $bDias[$fecha["wday"]];
+$meses = $bMeses[$fecha["mon"]];
+$fechaActual = "$dias ".$fecha["mday"]." de ".$meses." de ".$fecha["year"]."";
+$horaActual = "".$fecha["hours"].":".$fecha["minutes"].":".$fecha["seconds"]."";
 if(!isset($cedula)){
     // header ("Location: rediriges a la pagina de logueo".)
     header("Location: ./index.php");
@@ -15,13 +26,14 @@ if(!isset($cedula)){
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UFT-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Registrar hora</title>
         <link rel="stylesheet" href="./css/main.css">
+        <link rel="icon" type="image/x-icon" href="./image/favicon.ico">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     </head>
@@ -63,22 +75,17 @@ if(!isset($cedula)){
             
         </script>
 
-        <img class="tw-logo" src="./image/logo1.png">  
+        <img class="tw-logo" src="./image/logo1.png">
         <form action="frmHora.php" class="form-box" method="POST">
         <h3 class="form-sub-title">Hola <?php echo $nombre?> <?php echo $apellido1?> </h3>
-        <h3 class="form-sub-title">Registrar hora</h3>
-
+        <h3 class="form-sub-title">Empresa: <?php echo $nombreEmpresa?></h3>
+        <h3 class="form-sub-title">Fecha: <?php echo $fechaActual?> </h3>
         <select class="select" id="lista" name="lista">
             <option selected disabled>Horario a establecer</option>
-            <br>
             <option name="Entrada">Entrada</option>
-            <br>
             <option name="Salida a descanso">Salida a descanso</option>
-            <br>
             <option name="Entrada de descanso">Entrada de descanso</option>
-            <br>
             <option name="Salida">Salida</option>
-            <br>
         </select>
             <input type="submit" value="Registrar marca" name="btEnviar" id="btEnviar">
             <input type="hidden" id="Ub" name="Ub" readonly>
@@ -145,7 +152,7 @@ if(!isset($cedula)){
                                 //require './notiWhats.php';
                                 if(empty($_POST['Ub']) || $listR == ""){
                                     //Notificaciones sin Ubicación
-                                    $sql = "SELECT * FROM usuarios where wsNotif = 1";
+                                    $sql = "SELECT * FROM usuarios where wsNotif = 1 AND idEmpresa = $idEmpresa";
                                     if($result = mysqli_query($conexion, $sql)){
                                         if(mysqli_num_rows($result) > 0){
                                             while($row = mysqli_fetch_array($result)){
@@ -191,7 +198,7 @@ if(!isset($cedula)){
                                     }
                                 }else{
                                     //Notificaciones con Ubicación
-                                    $sql = "SELECT * FROM usuarios where wsNotif = 1";
+                                    $sql = "SELECT * FROM usuarios where wsNotif = 1 AND idEmpresa = $idEmpresa";
                                     if($result = mysqli_query($conexion, $sql)){
                                         if(mysqli_num_rows($result) > 0){
                                             while($row = mysqli_fetch_array($result)){
@@ -665,13 +672,14 @@ if(!isset($cedula)){
         } catch (Exception $e) {
                 log_exception($e);
         }
-            try {
-                if (isset($_POST['btSalir'])) {
-                    header("Location: ./index.php");
-                }
-            } catch (Exception $e) {
-                log_exception($e);
+        
+        try {
+            if (isset($_POST['btSalir'])) {
+                header("Location: ./index.php");
             }
+        } catch (Exception $e) {
+            log_exception($e);
+        }
 
         ?>
         <script async defer
