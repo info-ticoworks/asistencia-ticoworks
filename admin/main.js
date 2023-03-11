@@ -92,7 +92,6 @@ $(document).on("click", ".btnEditar", function(){
 } 
 });
 
-//botón BORRAR
 $(document).on("click", ".btnBorrar", function(){
     console.log("Click en botón de Borrar..."); 
     fila = $(this);

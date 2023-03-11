@@ -1,37 +1,34 @@
 <?php require_once "vistas/parte_superior.php"?>
 
 <!--INICIO del cont principal-->
-<div class="container">
-    <h1>Contenido principal</h1>
+<div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Lista de Usuarios</h1>
+        <p class="mb-4">Detalle de los usuarios actuales</p>
     
     
-    
+<!-- Inicio de Tabla -->
+<div class="card shadow mb-4">
  <?php
 include_once './bd/conexion.php';
 $objeto = new Conexion();
 $conexion = $objeto->Conectar();
 
-$consulta = "SELECT cedula, nombre, apellido1, apellido2, telefono, correo FROM usuarios
+$consulta = "SELECT cedula, nombre, apellido1, apellido2, telefono, correo, nombretipoUsuario, wsNotif FROM usuarios
             inner join tipoUsuario on usuarios.idTipoUsuario=tipoUsuario.idTipoUsuario
-            ORDER BY apellido1 ASC";
+            ORDER BY apellido1 desc";
 $resultado = $conexion->prepare($consulta);
 $resultado->execute();
 $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
-<div class="container">
-        <div class="row">
+<div class="card-body">
             <div class="col-lg-12">            
             <button id="btnNuevo" type="button" class="btn btn-success" data-toggle="modal">Nuevo</button>    
             </div>    
-        </div>    
     </div>    
-    <br>  
-<div class="container">
-        <div class="row">
-                <div class="col-lg-12">
+<div class="card-body">
                     <div class="table-responsive">        
-                        <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
+                        <table id="tablaPersonas" class="table table-bordered" style="width:100%">
                         <thead class="text-center">
                             <tr>
                                 <th>Cédula</th>
@@ -40,6 +37,8 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                 <th>Segundo Apellido</th>
                                 <th>Teléfono</th>
                                 <th>E-mail</th>
+                                <th>Tipo de Usuario</th>
+                                <th>Recibir WhatsApp</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -54,6 +53,18 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $dat['apellido2'] ?></td>
                                 <td><?php echo $dat['telefono'] ?></td>
                                 <td><?php echo $dat['correo'] ?></td>
+                                <td><?php echo $dat['nombretipoUsuario'] ?></td>
+                                <?php
+                                    if ($dat['wsNotif'] == 0) {
+                                    ?>
+                                    <td>No</td>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <td>Sí</td>
+                                    <?php
+                                    }
+                                ?>   
                                 <td></td>
                             </tr>
                             <?php
@@ -62,9 +73,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                         </tbody>        
                        </table>                    
                     </div>
-                </div>
-        </div>  
-    </div>    
+                </div> 
       
 <!--Modal para CRUD-->
 <div class="modal fade" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -108,6 +117,20 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                 <div class="form-group">
                 <label for="correo" class="col-form-label">Correo Electrónico:</label>
                 <input type="email" pattern="[^@\s]+@[^@\s]+.[^@\s]" placeholder="Formato: usuario@dominio.sufijo" class="form-control" id="correo">
+                </div>
+                <div class="form-group">
+                <label for="nombretipoUsuario" class="col-form-label">Tipo de Usuario: *</label>
+                <select class="form-control" id="nombretipoUsuario" required>
+                    <option selected disabled>Elija un tipo de usuario.</option>
+                    <option name="operario">Operario</option>
+                    <option name="supervisor">Supervisor</option>
+                    <option name="gerente">Gerente</option>
+                    <option name="administrador">Administrador</option>
+                </select>
+                </div>
+                <div class="form-group">
+                <label for="wsNotif" class="col-form-label">Recibir notificaciones por WhatsApp:</label>
+                <input type="checkbox" class="custom-checkbox" id="wsNotif" name="wsNotif" value="yes">
                 </div>          
             </div>
             <div class="modal-footer">
@@ -119,7 +142,8 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>  
       
-    
+</div>
+<!-- /.container-fluid -->
     
 </div>
 <!--FIN del cont principal-->

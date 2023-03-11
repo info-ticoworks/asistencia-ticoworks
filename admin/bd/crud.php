@@ -41,8 +41,6 @@ if(isset($_POST['wsNotif'])) {
 } else {
     $wsNotifc = 0;
 };
-
-
 echo $id;
 
 switch($opcion){
