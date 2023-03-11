@@ -33,6 +33,7 @@
 			$sql="UPDATE marcas set horaIngreso='$datos[0]',horaSalida='$datos[1]',cedula='$datos[2]'where id='$datos[3]'";
 			return mysqli_query($conexion,$sql);
 		}
+		
 		public function eliminar($id){
 			$obj= new conectar();
 			$conexion=$obj->conexion();

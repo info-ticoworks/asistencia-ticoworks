@@ -99,25 +99,54 @@
                                     <form id="formPersonas">    
                                         <div class="modal-body">
                                         <div class="form-group">
-                                            <label for="cedula" class="col-form-label">Cédula:</label>
-                                            <input type="text" class="form-control" id="cedula">
+                                            <label class="col-form-label">Campos requeridos. *</label>
+                                            </div>   
+                                        <div class="form-group">
+                                            <label for="id" class="col-form-label">Cédula: *</label>
+                                            <input type="number" class="form-control" id="id" required>
                                             </div>                                            
                                             <div class="form-group">
-                                            <label for="nombre" class="col-form-label">Nombre:</label>
-                                            <input type="text" class="form-control" id="nombre">
+                                            <label for="nombre" class="col-form-label">Nombre: *</label>
+                                            <input type="text" class="form-control" id="nombre" required>
                                             </div>
                                             <div class="form-group">
-                                            <label for="apellido1" class="col-form-label">Primer Apellido:</label>
-                                            <input type="text" class="form-control" id="apellido1">
+                                            <label for="apellido1" class="col-form-label">Primer Apellido: *</label>
+                                            <input type="text" class="form-control" id="apellido1" required>
                                             </div>                
                                             <div class="form-group">
-                                            <label for="apellido2" class="col-form-label">Segundo Apellido:</label>
-                                            <input type="number" class="form-control" id="apellido2">
+                                            <label for="apellido2" class="col-form-label">Segundo Apellido: *</label>
+                                            <input type="text" class="form-control" id="apellido2" required>
+                                            </div>            
+                                            <div class="form-group">
+                                            <label for="pass1" class="col-form-label">Password: *</label>
+                                            <input type="password" class="form-control" id="pass1">
                                             </div>
                                             <div class="form-group">
-                                            <label for="telefono" class="col-form-label">Segundo Apellido:</label>
-                                            <input type="number" class="form-control" id="telefono">
-                                            </div>           
+                                            <label for="pass2" class="col-form-label">Repetir password: *</label>
+                                            <input type="password" class="form-control" id="pass2">
+                                            </div>
+                                            <div class="form-group">
+                                            <label for="telefono" class="col-form-label">Teléfono: *</label>
+                                            <input type="number" class="form-control" id="telefono" required>
+                                            </div>      
+                                            <div class="form-group">
+                                            <label for="correo" class="col-form-label">Correo Electrónico:</label>
+                                            <input type="text" class="form-control" id="correo">
+                                            </div>
+                                            <div class="form-group">
+                                            <label for="idtipoUsuario" class="col-form-label">Tipo de Usuario: *</label>
+                                            <select class="form-control" id="idtipoUsuario" required>
+                                                <option selected disabled></option>
+                                                <option name="operario">Operario</option>
+                                                <option name="supervisor">Supervisor</option>
+                                                <option name="gerente">Gerente</option>
+                                                <option name="administrador">Administrador</option>
+                                            </select>
+                                            </div>
+                                            <div class="form-group">
+                                            <label for="wsNotif" class="col-form-label">Recibir notificaciones por WhatsApp:</label>
+                                            <input type="checkbox" class="custom-checkbox" id="wsNotif">
+                                            </div>    
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>

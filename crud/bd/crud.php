@@ -33,7 +33,8 @@ switch($opcion){
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         break;        
     case 3://baja
-        $consulta = "DELETE FROM personas WHERE id='$id' ";		
+        console.log("Borrado, Paso 3");	
+        $consulta = "DELETE FROM personas WHERE id='$id' ";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();                           
         break;        

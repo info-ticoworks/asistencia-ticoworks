@@ -25,7 +25,11 @@
     <!--datables CSS básico-->
     <link rel="stylesheet" type="text/css" href="./vendor/datatables/datatables.min.css"/>
     <!--datables estilo bootstrap 4 CSS-->  
-    <link rel="stylesheet"  type="text/css" href="./vendor/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">  
+    <link rel="stylesheet"  type="text/css" href="./vendor/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+
+    <!--CSS de Sweet Alert--> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 </head>
 

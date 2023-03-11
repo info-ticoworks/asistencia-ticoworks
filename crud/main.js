@@ -57,7 +57,7 @@ $(document).on("click", ".btnEditar", function(){
 });
 
 //botón BORRAR
-$(document).on("click", ".btnBorrar", function(){    
+$(document).on("click", ".btnBorrar", function(){ 
     fila = $(this);
     id = parseInt($(this).closest("tr").find('td:eq(0)').text());
     opcion = 3 //borrar
@@ -70,6 +70,11 @@ $(document).on("click", ".btnBorrar", function(){
             data: {opcion:opcion, id:id},
             success: function(){
                 tablaPersonas.row(fila.parents('tr')).remove().draw();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                // alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                console.log("Status: " + textStatus);
+                console.log("Error: " + errorThrown);
             }
         });
     }   
