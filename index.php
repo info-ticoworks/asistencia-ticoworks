@@ -53,7 +53,7 @@ session_start();
                         if($idTipoUsuario == "1" || $idTipoUsuario == "2" || $idTipoUsuario == "3"){
                             header("Location: frmHora.php");
                         }else if($idTipoUsuario == "5"){
-                            header("Location: frmAdmin.php");
+                            header("Location: ./admin/");
                         }else{
                             echo "<script>
                             Swal.fire({
