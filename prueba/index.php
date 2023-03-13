@@ -14,14 +14,15 @@ include_once './bd/conexion.php';
 $objeto = new Conexion();
 $conexion = $objeto->Conectar();
 
-$consulta = "SELECT cedula, nombre, apellido1, apellido2, telefono, correo, nombretipoUsuario, wsNotif FROM usuarios
+$consulta = "SELECT cedula, nombre, apellido1, apellido2, telefono, correo, nombretipoUsuario, wsNotif, nombreEmpresa FROM usuarios
             inner join tipoUsuario on usuarios.idTipoUsuario=tipoUsuario.idTipoUsuario
-            ORDER BY apellido1 desc";
+            inner join empresa on usuarios.idEmpresa=empresa.idEmpresa
+            ORDER BY apellido1 asc";
 $resultado = $conexion->prepare($consulta);
 $resultado->execute();
 $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 ?>
-<div class="card-body">
+<div class="card-header py-3">
             <div class="col-lg-12">            
             <button id="btnNuevo" type="button" class="btn btn-success" data-toggle="modal">Nuevo</button>    
             </div>    
@@ -39,6 +40,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                 <th>E-mail</th>
                                 <th>Tipo de Usuario</th>
                                 <th>Recibir WhatsApp</th>
+                                <th>Empresa</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -51,20 +53,21 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $dat['nombre'] ?></td>
                                 <td><?php echo $dat['apellido1'] ?></td>
                                 <td><?php echo $dat['apellido2'] ?></td>
-                                <td><?php echo $dat['telefono'] ?></td>
+                                <td class="text-center"><?php echo $dat['telefono'] ?></td>
                                 <td><?php echo $dat['correo'] ?></td>
                                 <td><?php echo $dat['nombretipoUsuario'] ?></td>
                                 <?php
                                     if ($dat['wsNotif'] == 0) {
                                     ?>
-                                    <td>No</td>
+                                    <td class="text-center">No</td>
                                     <?php
                                 } else {
                                     ?>
-                                    <td>Sí</td>
+                                    <td class="text-center">Sí</td>
                                     <?php
                                     }
-                                ?>   
+                                ?>
+                                <td><?php echo $dat['nombreEmpresa'] ?></td>
                                 <td></td>
                             </tr>
                             <?php
@@ -129,9 +132,18 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                 </select>
                 </div>
                 <div class="form-group">
-                <label for="wsNotif" class="col-form-label">Recibir notificaciones por WhatsApp:</label>
-                <input type="checkbox" class="custom-checkbox" id="wsNotif" name="wsNotif" value="yes">
-                </div>          
+                <label for="wsVerif" class="col-form-label">Recibir notificaciones por WhatsApp:</label>
+                <input type="checkbox" class="custom-checkbox" id="wsVerif" name="wsVerif" value="yes">
+                </div>
+                <div class="form-group">
+                <label for="nombreEmpresa" class="col-form-label">Empresa: *</label>
+                <select class="form-control" id="nombreEmpresa" required>
+                    <option selected disabled>Elija la empresa del usuario.</option>
+                    <option name="operario">TicoWorks</option>
+                    <option name="supervisor">Ecokhemia</option>
+                    <option name="gerente">Regixpro</option>
+                </select>
+                </div>       
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>

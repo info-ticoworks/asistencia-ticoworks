@@ -35,7 +35,7 @@ $("#btnNuevo").click(function(){
     document.getElementById('pass1').placeholder = 'Campo Obligatorio *';
     document.getElementById('pass2').required = true;
     document.getElementById('pass2').placeholder = 'Campo Obligatorio *';
-    document.getElementById('wsNotif').checked = false;
+    document.getElementById('wsVerif').checked = false;
     id=null;
     opcion = 1; //alta
 });    
@@ -55,10 +55,11 @@ $(document).on("click", ".btnEditar", function(){
     correo = fila.find('td:eq(5)').text();
     nombretipoUsuario = fila.find('td:eq(6)').text();
     if (fila.find('td:eq(7)').text() == 'Sí') {
-        document.getElementById('wsNotif').checked = true;
+        document.getElementById('wsVerif').checked = true;
     } else if (fila.find('td:eq(7)').text() == 'No') {
-        document.getElementById('wsNotif').checked = false;
+        document.getElementById('wsVerif').checked = false;
     }
+    nombreEmpresa = fila.find('td:eq(8)').text();
     //Seteo de algunas opciones al presionar el botón de Editar
     document.getElementById('pass1').required = false;
     document.getElementById('pass1').placeholder = 'Cambiar contraseña';
@@ -75,9 +76,8 @@ $(document).on("click", ".btnEditar", function(){
     $("#telefono").val(telefono);
     $("#correo").val(correo);
     $("#nombretipoUsuario").val(nombretipoUsuario);
-    $("#wsNotif.value").val(wsNotif);
-    //console.log(wsNotif);
-    //console.log(nombretipoUsuario);
+    $("#wsVerif.value").val(wsVerif);
+    $("#nombreEmpresa").val(nombreEmpresa);
     opcion = 2; //editar
     
     $(".modal-header").css("background-color", "#4e73df");
@@ -139,20 +139,21 @@ $("#formPersonas").submit(function(e){
     telefono = $.trim($("#telefono").val());
     correo = $.trim($("#correo").val());
     nombretipoUsuario = $.trim($("#nombretipoUsuario").val());
-    x = document.getElementById("wsNotif").checked;
+    wsNotif = '';
+    x = document.getElementById("wsVerif").checked;
     if (x == false) {
          wsNotif = 0;
     } else {
          wsNotif = 1;
     }
-    console.log(wsNotif);
+    nombreEmpresa = $.trim($("#nombreEmpresa").val());
 
     if (pass1 == pass2){
         $.ajax({
             url: "bd/crud.php",
             type: "POST",
             dataType: "json",
-            data: {id:id, newid:newid, nombre:nombre, apellido1:apellido1, apellido2:apellido2, pass1:pass1, pass2:pass2, telefono:telefono, correo:correo, nombretipoUsuario:nombretipoUsuario, wsNotif:wsNotif, opcion:opcion},
+            data: {id:id, newid:newid, nombre:nombre, apellido1:apellido1, apellido2:apellido2, pass1:pass1, pass2:pass2, telefono:telefono, correo:correo, nombretipoUsuario:nombretipoUsuario, wsNotif:wsNotif, nombreEmpresa:nombreEmpresa, opcion:opcion},
             success: function(data){
                 //Datos desde el Select de MySQL a la tabla.
                 console.log(data);
@@ -163,14 +164,15 @@ $("#formPersonas").submit(function(e){
                 telefono = data[0].telefono;
                 correo = data[0].correo;
                 nombreTipoUsuario = data[0].nombreTipoUsuario;
-                wsNotifCheck = data[0].wsNotif;
-                if (wsNotifCheck == 0) {
-                    wsNotif = 'No';
+                wsNotif = data[0].wsNotif;
+                if (wsNotif == 0) {
+                    wsVerif = 'No';
                 } else {
-                    wsNotif = 'Sí';
+                    wsVerif = 'Sí';
                 }
+                nombreEmpresa = data[0].nombreEmpresa;
                 if(opcion == 1){
-                    tablaPersonas.row.add([id,nombre,apellido1,apellido2,telefono,correo,nombretipoUsuario,wsNotif]).draw();
+                    tablaPersonas.row.add([id,nombre,apellido1,apellido2,telefono,correo,nombretipoUsuario,wsVerif,nombreEmpresa]).draw();
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -179,13 +181,13 @@ $("#formPersonas").submit(function(e){
                         timer: 2000
                       })
                 }else{
-                    tablaPersonas.row(fila).data([id,nombre,apellido1,apellido2,telefono,correo,nombretipoUsuario,wsNotif]).draw();
+                    tablaPersonas.row(fila).data([id,nombre,apellido1,apellido2,telefono,correo,nombretipoUsuario,wsVerif,nombreEmpresa]).draw();
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
-                        title: 'El usuario '+ nombre +' '+ apellido1 +' fue editado exitosamente',
+                        title: 'El usuario '+ nombre +' '+ apellido1 +' fue editado exitosamente.',
                         showConfirmButton: false,
-                        timer: 3000
+                        timer: 2000
                       })
                 }            
             },
@@ -195,7 +197,7 @@ $("#formPersonas").submit(function(e){
                     title: 'Oops...',
                     text: 'Ocurrio un error! El ID '+ newid +' ya existe o los datos son erróneos.',
                     footer: '<a href="">Why do I have this issue?</a>',
-                    timer: 4000
+                    timer: 3000
                 })
             }      
         });

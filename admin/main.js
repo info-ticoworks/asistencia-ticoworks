@@ -1,7 +1,4 @@
-
 $(document).ready(function(){
-    console.log("Documento Listo!");
-    console.log("Carga de Tabla...");
     tablaPersonas = $("#tablaPersonas").DataTable({
        "columnDefs":[{
         "targets": -1,
@@ -28,27 +25,27 @@ $(document).ready(function(){
     });
     
 $("#btnNuevo").click(function(){
-    console.log("Click en botón de Nuevo...");
     $("#formPersonas").trigger("reset");
     $(".modal-header").css("background-color", "#1cc88a");
     $(".modal-header").css("color", "white");
-    $(".modal-title").text("Nuevo Usuario");            
-    $("#modalCRUD").modal("show"); 
-    
- 
+    $(".modal-title").text("Nueva Persona");            
+    $("#modalCRUD").modal("show");
+    //Seteo de algunas opciones al presionar el botón de Nuevo
+    document.getElementById('pass1').required = true;
+    document.getElementById('pass1').placeholder = 'Campo Obligatorio *';
+    document.getElementById('pass2').required = true;
+    document.getElementById('pass2').placeholder = 'Campo Obligatorio *';
+    document.getElementById('wsVerif').checked = false;
     id=null;
     opcion = 1; //alta
-  
 });    
     
-var fila; //capturar la fila para editar o borrar el registro
+var fila; //Capturar la fila para editar o borrar el registro
     
-//botón EDITAR   
+//botón EDITAR    
 $(document).on("click", ".btnEditar", function(){
-    console.log("Click en botón de Editar...");
-    try {
     fila = $(this).closest("tr");
-    id = fila.find('td:eq(0)').text();
+    id = parseInt(fila.find('td:eq(0)').text());
     nombre = fila.find('td:eq(1)').text();
     apellido1 = fila.find('td:eq(2)').text();
     apellido2 = fila.find('td:eq(3)').text();
@@ -56,10 +53,21 @@ $(document).on("click", ".btnEditar", function(){
     pass2 = '';
     telefono = parseInt(fila.find('td:eq(4)').text());
     correo = fila.find('td:eq(5)').text();
-    idtipoUsuario = fila.find('td:eq(6)').text();
-    wsNotif = fila.find(fila.find('td:eq(7)').text());
-    
-    $("#id").val(id);
+    nombretipoUsuario = fila.find('td:eq(6)').text();
+    if (fila.find('td:eq(7)').text() == 'Sí') {
+        document.getElementById('wsVerif').checked = true;
+    } else if (fila.find('td:eq(7)').text() == 'No') {
+        document.getElementById('wsVerif').checked = false;
+    }
+    nombreEmpresa = fila.find('td:eq(8)').text();
+    //Seteo de algunas opciones al presionar el botón de Editar
+    document.getElementById('pass1').required = false;
+    document.getElementById('pass1').placeholder = 'Cambiar contraseña';
+    document.getElementById('pass2').required = false;
+    document.getElementById('pass2').placeholder = 'Repetir nueva contraseña';
+
+    //Captura de datos para enviar a MySQL
+    $("#newid").val(id);
     $("#nombre").val(nombre);
     $("#apellido1").val(apellido1);
     $("#apellido2").val(apellido2);
@@ -67,62 +75,62 @@ $(document).on("click", ".btnEditar", function(){
     $("#pass2").val(pass2);
     $("#telefono").val(telefono);
     $("#correo").val(correo);
-    $("#idtipoUsuario").val(idtipoUsuario);
-    $("#wsNotif").val(wsNotif);
-    console.log("id: ",id);
-    console.log("Nombre: ",nombre);
-    console.log("Primer Apellido: ",apellido1);
-    console.log("Segundo Apellido: ",apellido2);
-    console.log("Password 1: ",pass1);
-    console.log("Password 2: ",pass2);
-    console.log("teléfono: ",telefono);
-    console.log("Correo: ",correo);
-    console.log("Tipo de Usuario: ",idtipoUsuario);
-    console.log("Notificaciones por WhatsApp: ",wsNotif);
+    $("#nombretipoUsuario").val(nombretipoUsuario);
+    $("#wsVerif.value").val(wsVerif);
+    $("#nombreEmpresa").val(nombreEmpresa);
     opcion = 2; //editar
     
     $(".modal-header").css("background-color", "#4e73df");
     $(".modal-header").css("color", "white");
     $(".modal-title").text("Editar Persona");            
-    $("#modalCRUD").modal("show");
-} catch (error) {
-    console.error(error);
-    // Expected output: ReferenceError: nonExistentFunction is not defined
-    // (Note: the exact output may be browser-dependent)
-} 
+    $("#modalCRUD").modal("show"); 
+    console.log("Edición de Usuario - Paso 1...");
 });
 
-$(document).on("click", ".btnBorrar", function(){
-    console.log("Click en botón de Borrar..."); 
+//botón BORRAR
+$(document).on("click", ".btnBorrar", function(){    
     fila = $(this);
     id = parseInt($(this).closest("tr").find('td:eq(0)').text());
+    nombre = $(this).closest("tr").find('td:eq(1)').text();
+    apellido1 = $(this).closest("tr").find('td:eq(2)').text();
     opcion = 3 //borrar
-    console.log("id: ",id);
-    var respuesta = confirm("¿Está seguro de eliminar el registro: "+id+"?");
-    if(respuesta){
-        console.log("Borrado, Paso 1");
-        $.ajax({
-            url: "bd/crud.php",
-            type: "POST",
-            dataType: "json",
-            data: {opcion:opcion, id:id},
-            success: function(){
-                tablaPersonas.row(fila.parents('tr')).remove().draw();
-            },
-            error: function(XMLHttpRequest, textStatus, ReferenceError) { 
-                // alert("Status: " + textStatus); alert("Error: " + errorThrown);
-                console.log("Status: " + XMLHttpRequest);
-                console.log("Status: " + textStatus);
-                console.log("Error: " + ReferenceError);
+    Swal.fire({
+        title: 'Está seguro que desea eliminar el usuario '+ nombre +' '+ apellido1 +'?',
+        showDenyButton: false,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `Don't save`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "bd/crud.php",
+                    type: "POST",
+                    dataType: "json",
+                    data: {opcion:opcion, id:id},
+                    success: function(){
+                        tablaPersonas.row(fila.parents('tr')).remove().draw();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'El usuario '+ nombre +' '+ apellido1 +' fue eliminado con éxito',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                        // alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                        console.log("Status: " + textStatus);
+                        console.log("Error: " + errorThrown);
+                    }
+                });
             }
-        });
-    }
-console.log("Final de botón de Borrar...");
+      })
 });
-
-//botón NUEVO    
+    
 $("#formPersonas").submit(function(e){
-    e.preventDefault();    
+    e.preventDefault();
+    newid = $.trim($("#newid").val());
     nombre = $.trim($("#nombre").val());
     apellido1 = $.trim($("#apellido1").val());
     apellido2 = $.trim($("#apellido2").val());
@@ -130,35 +138,83 @@ $("#formPersonas").submit(function(e){
     pass2 = $.trim($("#pass2").val());
     telefono = $.trim($("#telefono").val());
     correo = $.trim($("#correo").val());
-    idtipoUsuario = $.trim($("#idtipoUsuario").val());
-    wsNotif = $.trim($("#wsNotif").val());    
-    $.ajax({
-        url: "./bd/crud.php",
-        type: "POST",
-        dataType: "json",
-        data: {id:id, nombre:nombre, apellido1:apellido1, apellido2:apellido2, pass1:pass1, pass2:pass2, telefono:telefono, correo:correo, idtipoUsuario:idtipoUsuario, wsNotif:wsNotif, opcion:opcion},
-        success: function(data){
-            console.log(data);
-            id = data[0].id;            
-            nombre = data[0].nombre;
-            apellido1 = data[0].apellido1;
-            apellido2 = data[0].apellido2;
-            telefono = data[0].telefono;
-            correo = data[0].correo;
-            idtipoUsuario = data[0].idtipoUsuario;
-            wsNotif = data[0].wsNotif;
-            if(opcion == 1){tablaPersonas.row.add([id,nombre,apellido1,apellido2,telefono,correo,idtipoUsuario,wsNotif]).draw();}
-            else{tablaPersonas.row(fila).data([id,nombre,apellido1,apellido2,telefono,correo,idtipoUsuario,wsNotif]).draw();}            
-        },
-        error: function(XMLHttpRequest, textStatus, ReferenceError) { 
-            // alert("Status: " + textStatus); alert("Error: " + errorThrown);
-            console.log("Status: " + XMLHttpRequest);
-            console.log("Status: " + textStatus);
-            console.log("Error: " + ReferenceError);
-        }      
-    });
-    $("#modalCRUD").modal("hide");   
+    nombretipoUsuario = $.trim($("#nombretipoUsuario").val());
+    wsNotif = '';
+    x = document.getElementById("wsVerif").checked;
+    if (x == false) {
+         wsNotif = 0;
+    } else {
+         wsNotif = 1;
+    }
+    nombreEmpresa = $.trim($("#nombreEmpresa").val());
+
+    if (pass1 == pass2){
+        $.ajax({
+            url: "bd/crud.php",
+            type: "POST",
+            dataType: "json",
+            data: {id:id, newid:newid, nombre:nombre, apellido1:apellido1, apellido2:apellido2, pass1:pass1, pass2:pass2, telefono:telefono, correo:correo, nombretipoUsuario:nombretipoUsuario, wsNotif:wsNotif, nombreEmpresa:nombreEmpresa, opcion:opcion},
+            success: function(data){
+                //Datos desde el Select de MySQL a la tabla.
+                console.log(data);
+                id = data[0].cedula;
+                nombre = data[0].nombre;
+                apellido1 = data[0].apellido1;
+                apellido2 = data[0].apellido2;
+                telefono = data[0].telefono;
+                correo = data[0].correo;
+                nombreTipoUsuario = data[0].nombreTipoUsuario;
+                wsNotif = data[0].wsNotif;
+                if (wsNotif == 0) {
+                    wsVerif = 'No';
+                } else {
+                    wsVerif = 'Sí';
+                }
+                nombreEmpresa = data[0].nombreEmpresa;
+                if(opcion == 1){
+                    tablaPersonas.row.add([id,nombre,apellido1,apellido2,telefono,correo,nombretipoUsuario,wsVerif,nombreEmpresa]).draw();
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'El usuario '+ nombre +' '+ apellido1 +' fue creado exitosamente',
+                        showConfirmButton: false,
+                        timer: 2000
+                      })
+                }else{
+                    tablaPersonas.row(fila).data([id,nombre,apellido1,apellido2,telefono,correo,nombretipoUsuario,wsVerif,nombreEmpresa]).draw();
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'El usuario '+ nombre +' '+ apellido1 +' fue editado exitosamente.',
+                        showConfirmButton: false,
+                        timer: 2000
+                      })
+                }            
+            },
+            error: function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Ocurrio un error! El ID '+ newid +' ya existe o los datos son erróneos.',
+                    footer: '<a href="">Why do I have this issue?</a>',
+                    timer: 3000
+                })
+            }      
+        });
+        $("#modalCRUD").modal("hide");   
+
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Lo sentimos...',
+            text: 'Las contraseñas no coinciden.',
+            footer: 'Favor revisar la información y volver a intentar',
+            timer: 3000
+        })
+    }
+
+ 
     
 });    
+    
 });
-
